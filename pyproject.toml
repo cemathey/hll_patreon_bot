@@ -12,6 +12,7 @@ alembic = "^1.13.1"
 sqlalchemy = "^2.0.25"
 discord-py = "^2.3.2"
 loguru = "^0.7.2"
+httpx = "^0.26.0"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
