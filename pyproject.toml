@@ -10,14 +10,30 @@ packages = [{include = "hll_patreon_bot"}]
 python = "^3.11"
 alembic = "^1.13.1"
 sqlalchemy = "^2.0.25"
-discord-py = "^2.3.2"
 loguru = "^0.7.2"
 httpx = "^0.26.0"
+pydantic = "^2.5.3"
+py-cord = "^2.4.1"
+trio = "^0.24.0"    
+cachetools = "^5.3.2"
+uvicorn = "^0.27.0.post1"
+starlette = "^0.36.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
 black = "^23.12.1"
+pyright = "^1.1.348"
+ipython = "^8.20.0"
+pytest-mock-resources = "^2.10.0"
+pytest = "^8.0.0"
+freezegun = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+pythonpath = ["hll_patreon_bot"]
