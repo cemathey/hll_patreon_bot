@@ -34,7 +34,7 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
         "currently_entitled_amount_cents"
     )
 
-    parsed["email"] = data["data"]["attributes"]["email"]
+    parsed["email"] = data["data"]["attributes"].get("email")
     parsed["last_charge_date"] = data["data"]["attributes"]["last_charge_date"]
     parsed["last_charge_status"] = data["data"]["attributes"]["last_charge_status"]
     parsed["patron_status"] = data["data"]["attributes"]["patron_status"]

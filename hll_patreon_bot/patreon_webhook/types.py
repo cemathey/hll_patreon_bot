@@ -58,7 +58,7 @@ class PatreonMemberWH(TypedDict):
 class PatreonPledgeWH(TypedDict):
     id: str
     currently_entitled_amount_cents: int | None
-    email: str
+    email: str | None
     last_charge_date: datetime
     next_charge_date: datetime | None
     last_charge_status: ChargeStatus
