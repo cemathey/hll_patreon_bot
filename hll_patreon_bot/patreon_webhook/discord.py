@@ -31,7 +31,7 @@ def _create_patreon_webhook_embed(
     last_charge_date_raw = data.get("last_charge_date")
 
     if isinstance(last_charge_date_raw, datetime):
-        last_charge_date = f"<:t{int(last_charge_date_raw.timestamp())}f:>"
+        last_charge_date = f"<t:{int(last_charge_date_raw.timestamp())}:f>"
     else:
         last_charge_date = "None"
 
