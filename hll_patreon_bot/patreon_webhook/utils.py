@@ -72,9 +72,10 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
     parsed: dict[str, Any] = {}
 
     parsed["id"] = data["data"]["id"]
-    parsed["currently_entitled_amount_cents"] = data["data"]["attributes"][
+    parsed["currently_entitled_amount_cents"] = data["data"]["attributes"].get(
         "currently_entitled_amount_cents"
-    ]
+    )
+
     parsed["email"] = data["data"]["attributes"]["email"]
     parsed["last_charge_date"] = data["data"]["attributes"]["last_charge_date"]
     parsed["last_charge_status"] = data["data"]["attributes"]["last_charge_status"]
