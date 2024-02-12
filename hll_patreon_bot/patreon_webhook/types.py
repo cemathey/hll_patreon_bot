@@ -33,6 +33,7 @@ class ChargeStatus(enum.Enum):
     refunded = "refunded"
     fraud = "fraud"
     other = "other"
+    none = None
 
     def is_successful(self) -> bool:
         return self == ChargeStatus.paid
