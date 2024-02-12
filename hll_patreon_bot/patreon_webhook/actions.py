@@ -165,7 +165,7 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
 
 
 def lookup_parser(event: PatreonWebhook):
-    if event.sub_resource == PatreonTriggerResource.PLEDGE:
+    if event.sub_resource is None:
         return parse_patreon_member_webhook
     elif (
         event.resource == PatreonTriggerResource.MEMBER
