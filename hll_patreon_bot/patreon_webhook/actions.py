@@ -110,9 +110,9 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
     # logger.info(f"{data=}")
 
     patreon_id = data["id"]
-    patreon_status = data["patron_status"]
-    last_charge_status = data["last_charge_status"]
-    next_charge_date = data["next_charge_date"]
+    patreon_status = data["attributes"]["patron_status"]
+    last_charge_status = data["attributes"]["last_charge_status"]
+    next_charge_date = data["attributes"]["next_charge_date"]
 
     with enter_session() as session:
         # if we don't have any linked CRCONs, bail out
