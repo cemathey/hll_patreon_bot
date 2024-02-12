@@ -47,7 +47,7 @@ class PatreonWebhook:
 
 class PatreonMemberWH(TypedDict):
     id: str
-    currently_entitled_amount_cents: int
+    currently_entitled_amount_cents: int | None
     email: str
     last_charge_date: datetime
     last_charge_status: ChargeStatus
@@ -57,7 +57,7 @@ class PatreonMemberWH(TypedDict):
 
 class PatreonPledgeWH(TypedDict):
     id: str
-    currently_entitled_amount_cents: int
+    currently_entitled_amount_cents: int | None
     email: str
     last_charge_date: datetime
     next_charge_date: datetime | None
