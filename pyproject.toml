@@ -16,8 +16,8 @@ pydantic = "^2.5.3"
 py-cord = "^2.4.1"
 trio = "^0.24.0"    
 cachetools = "^5.3.2"
-uvicorn = "^0.27.0.post1"
 starlette = "^0.36.1"
+uvicorn = "^0.27.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
