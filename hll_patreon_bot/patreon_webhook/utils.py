@@ -54,8 +54,10 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
 
     typed_data: PatreonPledgeWH = {
         "id": parsed["id"],
-        "currently_entitled_amount_cents": int(
-            parsed["currently_entitled_amount_cents"]
+        "currently_entitled_amount_cents": (
+            int(parsed["currently_entitled_amount_cents"])
+            if parsed["currently_entitled_amount_cents"]
+            else None
         ),
         "email": parsed["email"],
         "last_charge_date": datetime.fromisoformat(parsed["last_charge_date"]),
