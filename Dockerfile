@@ -6,7 +6,8 @@ ARG APP_NAME=hll_patreon_bot
 WORKDIR /code
 RUN apt update -y \
     && apt upgrade --no-install-recommends -y \ 
-    curl
+    curl \
+    locales
     # uvicorn
     # build-essential
 RUN curl -sSL https://install.python-poetry.org | python3 -
