@@ -83,8 +83,8 @@ async def webhook(request: Request):
     async with httpx.AsyncClient(
         headers=headers, event_hooks={"response": [raise_on_4xx_5xx]}
     ) as client:
-        await lookup_action(event=wh_type, client=client, data=data)
-        embed = lookup_action_embed(event=wh_type, data=data)
+        await lookup_action(event=wh_type, client=client, data=data["data"])
+        embed = lookup_action_embed(event=wh_type, data=data["data"])
         await wh.send(embed=embed)
 
         # TODO: execute wh embed

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from logging import getLogger
 from typing import Any, Callable, Coroutine
 
 import httpx
@@ -34,6 +35,8 @@ from patreon_webhook.utils import (
     parse_patreon_member_webhook,
     parse_patreon_pledge_webhook,
 )
+
+logger = getLogger(__name__)
 
 
 async def handle_member_create(client: httpx.AsyncClient, data: PatreonPledgeWH):
@@ -104,6 +107,8 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
     # If they are a current patron and payment status is paid
     # add the difference between their next charge date and now to their current VIP expiration
     # or if no expiration, set it the next charge date
+    # logger.info(f"{data=}")
+
     patreon_id = data["id"]
     patreon_status = data["patron_status"]
     last_charge_status = data["last_charge_status"]
