@@ -9,7 +9,7 @@ import aiohttp
 import discord
 import httpx
 from bot.constants import API_KEY_FORMAT, CRCON_API_KEY
-from patreon_webhook.actions import lookup_action
+from patreon_webhook.actions import lookup_action, lookup_parser
 from patreon_webhook.constants import PATREON_TRIGGER_DELIMITER
 from patreon_webhook.discord import lookup_action_embed
 from patreon_webhook.types import (
@@ -84,7 +84,9 @@ async def webhook(request: Request):
         headers=headers, event_hooks={"response": [raise_on_4xx_5xx]}
     ) as client:
         await lookup_action(event=wh_type, client=client, data=data["data"])
-        embed = lookup_action_embed(event=wh_type, data=data["data"])
+        parser = lookup_parser(event=wh_type)
+        parsed_data = parser(data)
+        embed = lookup_action_embed(event=wh_type, data=parsed_data)
         await wh.send(embed=embed)
 
         # TODO: execute wh embed
