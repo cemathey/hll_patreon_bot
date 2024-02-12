@@ -43,11 +43,11 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
     try:
         for obj in data["included"]:
             if obj["type"] == "user":
+                raw_discord = (
+                    obj["attributes"].get("social_connections", {}).get("discord", {})
+                )
                 parsed["discord_user_id"] = (
-                    obj["attributes"]
-                    .get("social_connections", {})
-                    .get("discord", {})
-                    .get("user_id")
+                    raw_discord.get("user_id") if raw_discord else None
                 )
     except KeyError:
         parsed["discord_user_id"] = None
@@ -88,11 +88,11 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
     try:
         for obj in data["included"]:
             if obj["type"] == "user":
+                raw_discord = (
+                    obj["attributes"].get("social_connections", {}).get("discord", {})
+                )
                 parsed["discord_user_id"] = (
-                    obj["attributes"]
-                    .get("social_connections", {})
-                    .get("discord", {})
-                    .get("user_id")
+                    raw_discord.get("user_id") if raw_discord else None
                 )
     except KeyError:
         parsed["discord_user_id"] = None
