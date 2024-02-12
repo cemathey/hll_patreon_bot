@@ -105,7 +105,11 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
             parsed["currently_entitled_amount_cents"]
         ),
         "email": parsed["email"],
-        "last_charge_date": datetime.fromisoformat(parsed["last_charge_date"]),
+        "last_charge_date": (
+            datetime.fromisoformat(parsed["last_charge_date"])
+            if parsed["last_charge_date"]
+            else None
+        ),
         "last_charge_status": ChargeStatus[parsed["last_charge_status"].lower()],
         "patron_status": PatronStatus(parsed["patron_status"]),
         "discord_user_id": parsed["discord_user_id"],

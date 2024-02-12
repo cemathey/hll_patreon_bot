@@ -49,7 +49,7 @@ class PatreonMemberWH(TypedDict):
     id: str
     currently_entitled_amount_cents: int | None
     email: str
-    last_charge_date: datetime
+    last_charge_date: datetime | None
     last_charge_status: ChargeStatus
     patron_status: PatronStatus
     discord_user_id: str | None
