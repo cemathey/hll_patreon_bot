@@ -37,6 +37,7 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
     parsed["last_charge_date"] = data["data"]["attributes"]["last_charge_date"]
     parsed["last_charge_status"] = data["data"]["attributes"]["last_charge_status"]
     parsed["patron_status"] = data["data"]["attributes"]["patron_status"]
+    parsed["next_charge_date"] = data["data"]["attributes"].get("next_charge_date")
 
     try:
         for obj in data["included"]:
@@ -55,7 +56,11 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
         "email": parsed["email"],
         "last_charge_date": datetime.fromisoformat(parsed["last_charge_date"]),
         "last_charge_status": ChargeStatus[parsed["last_charge_status"].lower()],
-        "next_charge_date": datetime.fromisoformat(parsed["next_charge_date"]),
+        "next_charge_date": (
+            datetime.fromisoformat(parsed["next_charge_date"])
+            if parsed["next_charge_date"]
+            else None
+        ),
         "patron_status": PatronStatus(parsed["patron_status"]),
         "discord_user_id": parsed["discord_user_id"],
     }
