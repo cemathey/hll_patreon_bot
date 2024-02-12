@@ -45,13 +45,13 @@ def _create_patreon_webhook_embed(
         currently_entitled_amount_cents = "None"
 
     embed.add_field(name="Patreon ID", value=data.get("id"))
-    embed.add_field(name="Email:", value=data.get("email"))
+    embed.add_field(name="Email:", value=data["email"] if data["email"] else "")
     embed.add_field(
         name="Currently Entitled Amount", value=currently_entitled_amount_cents
     )
     embed.add_field(name="Last Charge Date", value=last_charge_date)
-    embed.add_field(name="Last Charge Status", value=data.get("last_charge_status"))
-    embed.add_field(name="Patron Status", value=data.get("patron_status"))
+    embed.add_field(name="Last Charge Status", value=data["last_charge_status"].value)
+    embed.add_field(name="Patron Status", value=str(data["patron_status"].value))
 
     return embed
 
