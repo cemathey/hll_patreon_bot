@@ -9,6 +9,7 @@ import httpx
 from bot.constants import CRCON_SERVER_NUMBER, CRCON_URL, MISSING_PLAYER_NAME
 from bot.types import PlayerProfileType, PlayerVIPType, RconAPIResponse, VipPlayer
 from bot.utils import one_or_none
+from loguru import logger
 
 
 async def add_vip(
@@ -27,6 +28,9 @@ async def add_vip(
         "expiration": expiration_timestamp,
     }
 
+    logger.info(
+        f"Adding/updating VIP expiration for {player_id=} {name=} {expiration_timestamp=}"
+    )
     res = await client.post(url=url, data=payload)
     res_body: RconAPIResponse = res.json()
     return res_body

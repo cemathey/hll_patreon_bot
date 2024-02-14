@@ -10,9 +10,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, rela
 
 logger = getLogger(__name__)
 
-engine = create_engine(
-    "sqlite:///file:/code/db_data/db.sqlite?mode=rwc&uri=true", echo=True
-)
+engine = create_engine("sqlite:///file:db_data/db.sqlite?mode=rwc&uri=true", echo=True)
 
 
 @contextmanager
@@ -29,9 +27,6 @@ def enter_session() -> Generator[Session, None, None]:
 
 
 class Base(DeclarativeBase):
-    # def __repr__(self) -> str:
-    #     return self._repr(id=self.id)
-
     def _repr(self, fields: dict[Any, Any]) -> str:
         """Helper for __repr__
 
@@ -71,19 +66,16 @@ class DiscordPlayers(Base):
             )
         )
 
+    # Used to guarantee only a single `main` player ID but unlimited sponsored
     __table_args__ = (
         Index(
             "only_one_main",
             "main",
             "discord_id",
-            # "player_id",
             unique=True,
             sqlite_where=(~~main),
         ),
     )
-
-    def __str__(self) -> str:
-        return f"discord_id={self.discord_id} player_id={self.player_id}"
 
 
 class Discord(Base):
@@ -107,21 +99,9 @@ class Discord(Base):
                 id=self.id,
                 discord_name=self.discord_name,
                 patreon=self.patreon,
-                # players=self.players,
+                num_players=len(self.players),
             )
         )
-
-
-# Every Discord account can have at most 1 main steam ID, representing their
-# CRCON account
-
-# A discord account can have 0 or more sponsored steam IDs, representing players they pay for VIP
-# or sponsor through being an admin, whatever
-
-# This means a Player record can be linked to 1 or more Discord records, with the `main` record
-# being their actual discord account, and other records being sponsored by other discord accounts
-
-# many to many
 
 
 class Player(Base):
@@ -142,9 +122,7 @@ class Player(Base):
     def __repr__(self) -> str:
         return self._repr(
             fields=dict(
-                id=self.id,
-                player_id=self.player_id,
-                # discords=self.discords,
+                id=self.id, player_id=self.player_id, num_discords=len(self.discords)
             )
         )
 
@@ -168,9 +146,7 @@ class Patreon(Base):
     def __repr__(self) -> str:
         return self._repr(
             fields=dict(
-                id=self.id,
-                patreon_id=self.patreon_id,
-                # discord=self.discord,
+                id=self.id, patreon_id=self.patreon_id, discord_id=self.discord_id
             )
         )
 

@@ -1,9 +1,7 @@
-import asyncio
 import json
 import os
+from contextlib import asynccontextmanager
 from logging import getLogger
-from pprint import pprint
-from typing import Callable
 
 import aiohttp
 import discord
@@ -19,31 +17,52 @@ from patreon_webhook.types import (
 )
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from starlette.responses import Response
 from starlette.routing import Route
 
 logger = getLogger("uvicorn")
 
-# CLIENT: httpx.AsyncClient | None = None
+CLIENT: httpx.AsyncClient | None = None
+WEBHOOK: discord.Webhook | None = None
 
 
-# def get_client():
-#     global CLIENT
+def get_client():
+    global CLIENT
 
-#     if CLIENT is None:
-#         CLIENT = httpx.AsyncClient()
+    if CLIENT is None:
+        headers = {"Authorization": API_KEY_FORMAT.format(api_key=CRCON_API_KEY)}
+        CLIENT = httpx.AsyncClient(
+            headers=headers, event_hooks={"response": [raise_on_4xx_5xx]}
+        )
+
+    return CLIENT
 
 
 async def raise_on_4xx_5xx(response):
     response.raise_for_status()
 
 
+@asynccontextmanager
+async def with_client():
+    client = get_client()
+    yield client
+    await client.aclose()
+
+
+def get_webhook() -> discord.Webhook:
+    global WEBHOOK
+
+    if WEBHOOK is None:
+        WEBHOOK = discord.Webhook.from_url(
+            url=os.getenv("FORWARD_WEBHOOK", ""),
+            session=aiohttp.ClientSession(),
+        )
+
+    return WEBHOOK
+
+
 async def webhook(request: Request):
-    headers = {"Authorization": API_KEY_FORMAT.format(api_key=CRCON_API_KEY)}
-    wh = discord.Webhook.from_url(
-        url=os.getenv("FORWARD_WEBHOOK", ""),
-        session=aiohttp.ClientSession(),
-    )
+    wh = get_webhook()
 
     if not CRCON_API_KEY:
         raise ValueError(f"{CRCON_API_KEY} must be set")
@@ -80,9 +99,7 @@ async def webhook(request: Request):
 
     logger.info(json.dumps(data))
 
-    async with httpx.AsyncClient(
-        headers=headers, event_hooks={"response": [raise_on_4xx_5xx]}
-    ) as client:
+    async with with_client() as client:
         parser = lookup_parser(event=wh_type)
         parsed_data = parser(data)
         await lookup_action(event=wh_type, client=client, data=parsed_data)

@@ -1,12 +1,12 @@
 import locale
-from contextlib import asynccontextmanager
-from typing import Callable, Iterable, Type, TypeVar
+from typing import Callable, Iterable, TypeVar
 
 import discord
 from bot.constants import AUTHORIZED_DISCORD_ROLES
 from bot.models import Discord, Patreon, Player
 from discord.commands import ApplicationContext
 from discord.role import Role
+from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -62,6 +62,7 @@ def get_set_discord_record(session: Session, discord_user_name: str) -> Discord:
 
     if not discord_record:
         discord_record = Discord(discord_name=discord_user_name)
+        logger.warning(f"Creating new discord record {discord_record}")
         session.add(discord_record)
 
     return discord_record
@@ -78,6 +79,9 @@ def get_set_patreon_record(
 
     if not patreon_record:
         patreon_record = Patreon(patreon_id=patreon_id, discord=discord_record)
+        logger.warning(
+            f"Creating new patreon record {patreon_record} for {discord_record}"
+        )
         session.add(patreon_record)
 
     return patreon_record
@@ -94,6 +98,9 @@ def get_set_crcon_record(
 
     if not player_record:
         player_record = Player(player_id=player_id, main=main, discord=discord_record)
+        logger.warning(
+            f"Creating new player record {player_record} for {discord_record}"
+        )
         session.add(player_record)
 
     return player_record
@@ -112,15 +119,22 @@ def link_patreon_to_discord(session: Session, patreon_id: str, discord_name: str
         session=session, discord_user_name=discord_name
     )
 
-    patreon_record = get_set_patreon_record(
-        session=session, discord_record=discord_record, patreon_id=patreon_id
-    )
-
-    if patreon_record.discord:
+    patreon_record = get_patreon_record(session=session, patreon_id=patreon_id)
+    if patreon_record is None:
+        patreon_record = get_set_patreon_record(
+            session=session, discord_record=discord_record, patreon_id=patreon_id
+        )
+        logger.warning(f"{patreon_record} linked to {discord_record}")
+    elif patreon_record and not patreon_record.discord:
+        patreon_record.discord = discord_record
+        logger.warning(f"{patreon_record} linked to {discord_record}")
+    elif patreon_record and patreon_record.discord:
         patreon_id_already_linked = True
         previous_linked_discord = patreon_record.discord.discord_name
-
-    discord_record.patreon = patreon_record
+        patreon_record.discord = discord_record
+        logger.warning(
+            f"{discord_record!r} previously linked to {patreon_record.discord.discord_name} now linked to {discord_record.discord_name}"
+        )
 
     return patreon_id_already_linked, previous_linked_discord
 

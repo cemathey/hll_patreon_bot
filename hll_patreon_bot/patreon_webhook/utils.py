@@ -25,8 +25,7 @@ def calc_vip_expiration_timestamp(
 
 
 def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
-    parsed: dict[str, Any] = {}
-
+    """Pull data out of Patreons JSON webhook"""
     parsed: dict[str, Any] = {}
 
     parsed["id"] = data["data"]["id"]
@@ -52,6 +51,10 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
     except KeyError:
         parsed["discord_user_id"] = None
 
+    last_charge_status = ChargeStatus[
+        (parsed["last_charge_status"].lower() if parsed["last_charge_status"] else None)
+    ]  # type: ignore
+
     typed_data: PatreonPledgeWH = {
         "id": parsed["id"],
         "currently_entitled_amount_cents": (
@@ -61,15 +64,7 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
         ),
         "email": parsed["email"],
         "last_charge_date": datetime.fromisoformat(parsed["last_charge_date"]),
-        "last_charge_status": (
-            ChargeStatus[
-                (
-                    parsed["last_charge_status"].lower()
-                    if parsed["last_charge_status"]
-                    else None
-                )
-            ]
-        ),
+        "last_charge_status": last_charge_status,
         "next_charge_date": (
             datetime.fromisoformat(parsed["next_charge_date"])
             if parsed["next_charge_date"]
@@ -83,6 +78,7 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
 
 
 def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
+    """Pull data out of Patreons JSON webhook"""
     parsed: dict[str, Any] = {}
 
     parsed["id"] = data["data"]["id"]
@@ -107,6 +103,10 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
     except KeyError:
         parsed["discord_user_id"] = None
 
+    last_charge_status = ChargeStatus[
+        (parsed["last_charge_status"].lower() if parsed["last_charge_status"] else None)
+    ]  # type: ignore
+
     typed_data: PatreonMemberWH = {
         "id": parsed["id"],
         "currently_entitled_amount_cents": int(
@@ -118,15 +118,7 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
             if parsed["last_charge_date"]
             else None
         ),
-        "last_charge_status": (
-            ChargeStatus[
-                (
-                    parsed["last_charge_status"].lower()
-                    if parsed["last_charge_status"]
-                    else None
-                )
-            ]
-        ),
+        "last_charge_status": last_charge_status,
         "patron_status": PatronStatus[parsed["patron_status"]],
         "discord_user_id": parsed["discord_user_id"],
     }

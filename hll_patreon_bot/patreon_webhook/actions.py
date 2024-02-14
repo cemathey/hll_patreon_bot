@@ -1,28 +1,16 @@
 from datetime import datetime, timedelta, timezone
-from logging import getLogger
-from typing import Any, Callable, Coroutine
 
 import httpx
 from bot.constants import MISSING_PLAYER_NAME
 from bot.integrations.crcon import add_vip, fetch_current_expiration, fetch_current_vips
-from bot.models import Discord, Patreon, Player, enter_session
+from bot.models import enter_session
 from bot.utils import (
-    get_crcon_record,
-    get_discord_record,
     get_patreon_record,
-    get_set_crcon_record,
-    get_set_discord_record,
-    get_set_patreon_record,
+    link_patreon_to_discord,
+    link_primary_crcon_to_discord,
+    link_sponsored_crcon_to_discord,
 )
-from patreon_webhook.constants import (
-    ACTION_CREATE,
-    ACTION_DELETE,
-    ACTION_UPDATE,
-    PATREON_HEADERS,
-    PATREON_TRIGGER_DELIMITER,
-    RESOURCE_MEMBER,
-    RESOURCE_PLEDGE,
-)
+from loguru import logger
 from patreon_webhook.types import (
     PatreonMemberWH,
     PatreonPledgeWH,
@@ -36,61 +24,47 @@ from patreon_webhook.utils import (
     parse_patreon_pledge_webhook,
 )
 
-logger = getLogger(__name__)
-
 
 async def handle_member_create(client: httpx.AsyncClient, data: PatreonPledgeWH):
+    """Link a Patreon ID to a Discord user if linked on Patreons website"""
     # If they've linked their Discord in Patreon, create/link Discord record
     # Patreon's bot will handle role change
     if (discord_name := data["discord_user_id"]) is None:
         return
 
     with enter_session() as session:
-        discord_record = get_set_discord_record(
-            session=session, discord_user_name=discord_name
-        )
-        patreon_record = get_set_patreon_record(
-            session=session, discord_record=discord_record, patreon_id=data["id"]
+        link_patreon_to_discord(
+            session=session, patreon_id=data["id"], discord_name=discord_name
         )
 
 
 async def handle_member_delete(client: httpx.AsyncClient, data: PatreonPledgeWH):
+    """Not currently used to retain historical info"""
     # what do we need to do if a person deletes their patreon
     # VIP will expire naturally
     # do we really want to delete their patreon record or unlink their discord?
     # destroys historical info for minimal db size reduction
-    with enter_session() as session:
-        patreon = get_patreon_record(session=session, patreon_id=data["id"])
-        if patreon and patreon.discord:
-            pass
+    pass
+
+    # with enter_session() as session:
+    #     patreon = get_patreon_record(session=session, patreon_id=data["id"])
+    #     if patreon and patreon.discord:
+    #         pass
 
 
 async def handle_member_update(client: httpx.AsyncClient, data: PatreonPledgeWH):
-    # Link Discord if they've linked their Discord in Patreon
+    """Link a Patreon ID to a Discord user if linked or changed on Patreons website"""
     patreon_id = data["id"]
     discord_name = data["discord_user_id"]
 
     if not discord_name:
+        logger.info(f"{patreon_id} updated, no discord linked")
         return
 
     with enter_session() as session:
-        discord_record = get_set_discord_record(
-            session=session, discord_user_name=discord_name
+        link_patreon_to_discord(
+            session=session, patreon_id=patreon_id, discord_name=discord_name
         )
-        patreon = get_patreon_record(session=session, patreon_id=patreon_id)
-
-        if not patreon:
-            get_set_patreon_record(
-                session=session, discord_record=discord_record, patreon_id=patreon_id
-            )
-        elif patreon and not patreon.discord:
-            patreon = get_set_patreon_record(
-                session=session, discord_record=discord_record, patreon_id=patreon_id
-            )
-
-        elif patreon and patreon.discord:
-            # TODO: return and/or log and/or webhook Discord if we're unlinking an old discord account
-            patreon.discord = discord_record
 
 
 async def handle_pledge_create(client: httpx.AsyncClient, data: PatreonPledgeWH):
@@ -124,7 +98,9 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
         patreon_record = get_patreon_record(session=session, patreon_id=patreon_id)
 
         if patreon_record is None:
-            # TODO log whatever
+            logger.warning(
+                f"Could not update VIP expiration for {patreon_id} no patreon record exists"
+            )
             return
 
         # TODO: do we need to check patreon status and not just last charge?
@@ -133,13 +109,14 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
 
             # only the day component of a timedelta will ever be negative
             if earned_time.days < 0:
-                # TODO log whatever
-                pass
+                logger.error(f"{earned_time=} for {patreon_record} was < 0")
             else:
                 current_vips = await fetch_current_vips(client=client)
 
                 # Update every associated CRCON player
+                modified_players = False
                 for discord_player in patreon_record.discord.players:
+                    modified_players = True
                     player_id = discord_player.player.player_id
                     vip_info = current_vips.get(player_id)
                     vip_name = vip_info.name if vip_info else MISSING_PLAYER_NAME
@@ -156,11 +133,19 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
                         ),
                     )
 
+                    logger.info(
+                        f"Adding/updating VIP expiration for {player_id=} {vip_name=} {current_expiration=} {new_expiration=}"
+                    )
                     await add_vip(
                         client=client,
                         player_id=player_id,
                         name=vip_name,
                         expiration_timestamp=new_expiration,
+                    )
+
+                if not modified_players:
+                    logger.warning(
+                        f"{patreon_record} has no linked player accounts to update VIP expirations for"
                     )
 
 
@@ -185,34 +170,34 @@ async def lookup_action(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.CREATE,
     ):
-        return await handle_member_create(client=client, data=data)
+        return await handle_member_create(client=client, data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.DELETE,
     ):
-        return await handle_member_delete(client=client, data=data)
+        return await handle_member_delete(client=client, data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.UPDATE,
     ):
-        return await handle_member_update(client=client, data=data)
+        return await handle_member_update(client=client, data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.CREATE,
     ):
-        return await handle_pledge_create(client=client, data=data)
+        return await handle_pledge_create(client=client, data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.DELETE,
     ):
-        return await handle_pledge_delete(client=client, data=data)
+        return await handle_pledge_delete(client=client, data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.UPDATE,
     ):
-        return await handle_pledge_update(client=client, data=data)
+        return await handle_pledge_update(client=client, data=data)  # type: ignore
     else:
         raise ValueError(f"Unmatched {event}")

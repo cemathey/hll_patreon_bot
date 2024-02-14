@@ -113,34 +113,34 @@ def lookup_action_embed(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.CREATE,
     ):
-        return create_member_creation_embed(data=data)
+        return create_member_creation_embed(data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.DELETE,
     ):
-        return create_member_deletion_embed(data=data)
+        return create_member_deletion_embed(data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         action=PatreonTriggerAction.UPDATE,
     ):
-        return create_member_update_embed(data=data)
+        return create_member_update_embed(data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.CREATE,
     ):
-        return create_pledge_creation_embed(data=data)
+        return create_pledge_creation_embed(data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.DELETE,
     ):
-        return create_pledge_deletion_embed(data=data)
+        return create_pledge_deletion_embed(data=data)  # type: ignore
     elif event == PatreonWebhook(
         resource=PatreonTriggerResource.MEMBER,
         sub_resource=PatreonTriggerResource.PLEDGE,
         action=PatreonTriggerAction.UPDATE,
     ):
-        return create_pledge_update_embed(data=data)
+        return create_pledge_update_embed(data=data)  # type: ignore
     else:
         raise ValueError(f"Unmatched {event}")
