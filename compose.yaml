@@ -20,9 +20,12 @@ services:
         container_name: hll_patreon_bot-${COMPOSE_PROJECT_NAME}
         volumes:
             - ./logs:/code/logs
+            - db-data:/code/db_data
         restart: unless-stopped
         image: build
         build:
           dockerfile: ./Dockerfile
         ports:
             - 8888:8888
+volumes:
+    db-data:

@@ -10,7 +10,9 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, rela
 
 logger = getLogger(__name__)
 
-engine = create_engine("sqlite:///file:db.sqlite?mode=rwc&uri=true", echo=True)
+engine = create_engine(
+    "sqlite:///file:/code/db_data/db.sqlite?mode=rwc&uri=true", echo=True
+)
 
 
 @contextmanager
@@ -173,9 +175,9 @@ class Patreon(Base):
         )
 
 
-if __name__ == "__main__":
-    Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
 
+if __name__ == "__main__":
     with enter_session() as session:
         d1 = Discord(discord_name="discord#0")
         d2 = Discord(discord_name="discord#1")
