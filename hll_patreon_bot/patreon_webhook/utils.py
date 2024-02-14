@@ -75,7 +75,7 @@ def parse_patreon_pledge_webhook(data: dict[str, Any]) -> PatreonPledgeWH:
             if parsed["next_charge_date"]
             else None
         ),
-        "patron_status": PatronStatus(parsed["patron_status"]),
+        "patron_status": PatronStatus[parsed["patron_status"]],
         "discord_user_id": parsed["discord_user_id"],
     }
 
@@ -127,7 +127,7 @@ def parse_patreon_member_webhook(data: dict[str, Any]) -> PatreonMemberWH:
                 )
             )
         ),
-        "patron_status": PatronStatus(parsed["patron_status"]),
+        "patron_status": PatronStatus[parsed["patron_status"]],
         "discord_user_id": parsed["discord_user_id"],
     }
 

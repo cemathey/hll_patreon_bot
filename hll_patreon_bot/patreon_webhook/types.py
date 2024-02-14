@@ -16,23 +16,23 @@ class PatreonTriggerAction(enum.Enum):
 
 
 class PatronStatus(enum.Enum):
-    active = "active_patron"
-    declined = "declined_patron"
-    former = "former_patron"
+    active_patron = "Active"
+    declined_patron = "Declined"
+    former_patron = "Former"
     none = None
 
     def is_successful(self):
-        return self == PatronStatus.active
+        return self == PatronStatus.active_patron
 
 
 class ChargeStatus(enum.Enum):
-    paid = "paid"
-    declined = "declined"
-    deleted = "deleted"
-    pending = "pending"
-    refunded = "refunded"
-    fraud = "fraud"
-    other = "other"
+    paid = "Paid"
+    declined = "Declined"
+    deleted = "Deleted"
+    pending = "Pending"
+    refunded = "Refunded"
+    fraud = "Fraud"
+    other = "Other"
     none = None
 
     def is_successful(self) -> bool:

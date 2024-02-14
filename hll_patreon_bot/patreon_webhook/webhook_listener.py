@@ -92,6 +92,7 @@ async def webhook(request: Request):
         # TODO: execute wh embed
         # return Response(status_code=400)
 
+    await wh.delete()
     return Response(status_code=200)
 
 

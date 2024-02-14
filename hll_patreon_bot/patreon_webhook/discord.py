@@ -50,7 +50,9 @@ def _create_patreon_webhook_embed(
         name="Currently Entitled Amount", value=currently_entitled_amount_cents
     )
     embed.add_field(name="Last Charge Date", value=last_charge_date)
-    embed.add_field(name="Last Charge Status", value=data["last_charge_status"].value)
+    embed.add_field(
+        name="Last Charge Status", value=str(data["last_charge_status"].value)
+    )
     embed.add_field(name="Patron Status", value=str(data["patron_status"].value))
 
     return embed
