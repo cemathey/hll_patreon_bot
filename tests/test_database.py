@@ -1,16 +1,20 @@
 import sqlite3
 from datetime import datetime, timezone
-from logging import getLogger
 
 import pytest
 from freezegun import freeze_time
+from loguru import logger
 from sqlalchemy import create_engine, select
 from sqlalchemy.exc import IntegrityError, PendingRollbackError
 from sqlalchemy.orm import Session
 
-from hll_patreon_bot.bot.models import Base, Discord, DiscordPlayers, Patreon, Player
-
-logger = getLogger(__name__)
+from hll_patreon_bot.database.models import (
+    Base,
+    Discord,
+    DiscordPlayers,
+    Patreon,
+    Player,
+)
 
 
 @pytest.fixture
@@ -126,3 +130,29 @@ def test_player_discord_optional(session: Session):
 def test_discord_player_patreon_optional(session: Session):
     d1 = Discord(discord_name="discord#0")
     session.add(d1)
+
+
+def test_can_link_multiple_sponsored_player_ids(session: Session):
+    p1 = Player(player_id="1234")
+    p2 = Player(player_id="4321")
+
+    d1 = Discord(discord_name="asdf#0")
+
+    d1_p1 = DiscordPlayers(discord=d1, player=p1)
+    d1_p2 = DiscordPlayers(discord=d1, player=p2)
+
+    session.add(d1_p1)
+    session.add(d1_p2)
+
+
+def test_player_can_be_sponsored_by_multiple_discords(session: Session):
+    p1 = Player(player_id="1234")
+
+    d1 = Discord(discord_name="asdf#0")
+    d2 = Discord(discord_name="ghjk#0")
+
+    d1_p1 = DiscordPlayers(discord=d1, player=p1)
+    d2_p1 = DiscordPlayers(discord=d2, player=p1)
+
+    session.add(d1_p1)
+    session.add(d2_p1)

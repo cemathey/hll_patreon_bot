@@ -1,6 +1,5 @@
-from logging import getLogger
-
 import pytest
+from loguru import logger
 
 from hll_patreon_bot.patreon_webhook.types import PatreonMemberWH, PatreonPledgeWH
 from hll_patreon_bot.patreon_webhook.utils import (
@@ -9,9 +8,6 @@ from hll_patreon_bot.patreon_webhook.utils import (
 )
 
 # from hll_patreon_bot.patreon_webhook
-
-
-logger = getLogger(__name__)
 
 
 def test_parse_patreon_member_webhook():

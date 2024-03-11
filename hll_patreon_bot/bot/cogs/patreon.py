@@ -1,3 +1,4 @@
+import json
 import locale
 import operator
 from datetime import datetime, timezone
@@ -5,20 +6,30 @@ from pprint import pprint
 
 import discord
 import httpx
-from bot.constants import PATREON_ACCESS_TOKEN, PATREON_CAMPAIGN_ID, PATREON_HOST_NAME
-from bot.models import enter_session
-from bot.utils import (
-    get_set_discord_record,
-    get_set_patreon_record,
-    link_patreon_to_discord,
-    one_or_none,
-    unlink_patreon_from_discord,
-)
 from cachetools import TTLCache, cached, cachedmethod
 from discord.commands import ApplicationContext
 from discord.ext import commands
+from loguru import logger
 from patreon_v2 import typedefs as patreon_api_types
 from patreon_v2.async_api import AsyncAPI as PatreonAPI
+
+from hll_patreon_bot.bot.constants import (
+    PATREON_ACCESS_TOKEN,
+    PATREON_CAMPAIGN_ID,
+    PATREON_HOST_NAME,
+)
+from hll_patreon_bot.bot.utils import one_or_none
+from hll_patreon_bot.database.models import enter_session
+from hll_patreon_bot.database.utils import (
+    get_set_discord_record,
+    link_patreon_to_discord,
+    unlink_patreon_from_discord,
+)
+from hll_patreon_bot.integrations.patreon.patreon import (
+    get_campaign_members,
+    get_member,
+)
+from hll_patreon_bot.integrations.patreon.types import PatreonMember, PledgeHistory
 
 locale.setlocale(locale.LC_ALL, "")
 
@@ -26,11 +37,15 @@ locale.setlocale(locale.LC_ALL, "")
 def create_patreon_search_embed(
     email: str | None = None,
     patreon_id: str | None = None,
+    discord_user: discord.User | None = None,
     name: str | None = None,
     notes: str | None = None,
 ):
     embed = discord.Embed()
     embed.title = "Searching Patreon, this may take 5-10 seconds"
+    embed.add_field(
+        name="Discord", value=discord_user.name if discord_user else "", inline=False
+    )
     embed.add_field(name="Email", value=email if email else "", inline=False)
     embed.add_field(
         name="Patreon ID", value=patreon_id if patreon_id else "", inline=False
@@ -43,26 +58,27 @@ def create_patreon_search_embed(
 
 
 def create_pledge_history_embed(
-    pledge_histories: list[patreon_api_types.PledgeEvent],
+    pledge_histories: list[PledgeHistory],
 ) -> discord.Embed:
     embed = discord.Embed()
 
     embed.title = "Pledge History (up to last 5)"
-    for p in pledge_histories:
+    for p in pledge_histories[:5]:
         embed.add_field(
-            name="Date:", value=f"<t:{int(p.date.timestamp())}:f>", inline=True
+            name="Date:", value=f"<t:{int(p['date'].timestamp())}:f>", inline=True
         )
         embed.add_field(
             name="Amount: ",
             value=(
-                locale.currency(p.amount_cents / 100, symbol=True, grouping=True)
+                locale.currency(p["amount_cents"] / 100, symbol=True, grouping=True)
                 if p
                 else ""
             ),
             inline=True,
         )
-        embed.add_field(name="\u200B", value="\u200B")  # newline
-        # embed.add_field(name="\u200b", value="\u200b", inline=False)
+        embed.add_field(name="Status", value=str(p["status"]), inline=True)
+        # embed.add_field(name="\u200B", value="\u200B")  # newline
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
 
     embed.timestamp = datetime.now(tz=timezone.utc)
 
@@ -70,32 +86,30 @@ def create_pledge_history_embed(
 
 
 def create_patreon_embed(
-    member: patreon_api_types.Member,
-    user: patreon_api_types.User | None = None,
-    tiers: dict[str, patreon_api_types.Tier] | None = None,
-    pledge_histories: dict[str, patreon_api_types.PledgeEvent] | None = None,
+    member: PatreonMember,
+    discord_user: discord.User | None = None,
+    # user: patreon_api_types.User | None = None,
+    # tiers: dict[str, patreon_api_types.Tier] | None = None,
+    # pledge_histories: dict[str, patreon_api_types.PledgeEvent] | None = None,
 ) -> discord.Embed:
     embed = discord.Embed()
 
-    embed.add_field(name="Patreon ID", value=member.id, inline=False)
     embed.add_field(
-        name="Patreon User ID", value=member.user_id if member.user_id else ""
+        name="Discord",
+        value=f"{discord_user.mention}" if discord_user else "",
     )
-    embed.add_field(name="Email", value=member.email if member.email else "")
-    embed.add_field(name="Name", value=member.full_name if member.full_name else "")
+    embed.add_field(name="Patreon ID", value=member["id"], inline=False)
+    embed.add_field(name="Email", value=member["email"])
+    embed.add_field(name="Name", value=member["name"] if member["name"] else "")
     embed.add_field(
         name="Patron Status",
-        value=(
-            member.patron_status.value
-            if member.patron_status and member.patron_status.value
-            else ""
-        ),
+        value=member["patron_status"].value if member["patron_status"].value else "",
     )
     embed.add_field(
         name="Last Charge Status",
         value=(
-            member.last_charge_status.value
-            if member.last_charge_status and member.last_charge_status.value
+            member["last_charge_status"].value
+            if member["last_charge_status"].value
             else ""
         ),
         inline=False,
@@ -103,16 +117,16 @@ def create_patreon_embed(
     embed.add_field(
         name="Last Charge (or attempted charge) Date",
         value=(
-            f"<t:{int(member.last_charge_date.timestamp())}:f>"
-            if member.last_charge_date
+            f"<t:{int(member['last_charge_date'].timestamp())}:f>"
+            if member["last_charge_date"]
             else ""
         ),
     )
     embed.add_field(
         name="Next Charge Date",
         value=(
-            f"<t:{int(member.next_charge_date.timestamp())}:f>"
-            if member.next_charge_date
+            f"<t:{int(member['next_charge_date'].timestamp())}:f>"
+            if member["next_charge_date"]
             else ""
         ),
         inline=False,
@@ -121,24 +135,31 @@ def create_patreon_embed(
         name="Currently Entitled Amount",
         value=(
             locale.currency(
-                member.currently_entitled_amount_cents / 100, symbol=True, grouping=True
+                member["currently_entitled_amount_cents"] / 100,
+                symbol=True,
+                grouping=True,
             )
-            if member.currently_entitled_amount_cents
-            else ""
         ),
     )
 
-    for tier in member.currently_entitled_tiers:
-        t = tiers.get(tier, None) if tiers else None
-        # print(f"{t=} {tier=}")
-        embed.add_field(
-            name="Tier: ", value=t.title if t and t.title else "", inline=False
-        )
-        # embed.add_field(
-        #     name="Tier: ", value=t.description if t and t.description else ""
-        # )
+    # TODO: add this again
+    # for tier in member.currently_entitled_tiers:
+    #     t = tiers.get(tier, None) if tiers else None
+    #     # print(f"{t=} {tier=}")
+    #     embed.add_field(
+    #         name="Tier: ", value=t.title if t and t.title else "", inline=False
+    #     )
+    #     # embed.add_field(
+    #     #     name="Tier: ", value=t.description if t and t.description else ""
+    #     # )
 
-    embed.add_field(name="Patreon Notes", value=member.note if member.note else "")
+    embed.add_field(
+        name="Patreon Notes", value=member["note"] if member["note"] else ""
+    )
+
+    if member["thumb_url"]:
+        embed.url = member["thumb_url"]
+
     embed.timestamp = datetime.now(tz=timezone.utc)
 
     return embed
@@ -164,19 +185,16 @@ class Patreon(commands.Cog):
     ) -> None:
         super().__init__()
         self.bot = bot
-        self.api = PatreonAPI(
-            access_token=acccess_token or PATREON_ACCESS_TOKEN,
-            base_url=base_url or PATREON_HOST_NAME,
-        )
-        self.cache = TTLCache(maxsize=500, ttl=60)
 
-    @cachedmethod(operator.attrgetter("cache"))
+    # @cachedmethod(operator.attrgetter("cache"))
     async def fetch_members(self):
-        members, related_objects = await self.api.get_campaign_members(
-            campaign=PATREON_CAMPAIGN_ID, all_includes_all_fields=True, fetch_all=True
-        )
+        async with httpx.AsyncClient() as client:
+            # get_campaign_members yields successfully more populated dicts per page
+            # so we can just take the last value when we're getting everyone
+            async for members in get_campaign_members(client=client):
+                pass
 
-        return members, related_objects
+        return members
 
     @discord.slash_command(description="Show the user's status on Patreon")
     async def show_patreon(self, ctx: ApplicationContext, discord_user: discord.User):
@@ -188,10 +206,13 @@ class Patreon(commands.Cog):
             if discord_record.patreon is None:
                 await ctx.respond(f"No Patreon account found for {discord_user}")
             else:
-                patreon_member, includes = await self.api.get_member(
-                    member=discord_record.patreon.patreon_id
-                )
-                await ctx.respond(embed=create_patreon_embed(patreon_member))
+                async with httpx.AsyncClient() as client:
+                    patreon_member = await get_member(
+                        client=client, member_id=discord_record.patreon.patreon_id
+                    )
+
+                if patreon_member:
+                    await ctx.respond(embed=create_patreon_embed(patreon_member))
 
     @discord.slash_command(
         description="Link (connect) a Discord account to a Patreon account"
@@ -199,10 +220,12 @@ class Patreon(commands.Cog):
     async def link_patreon(
         self, ctx: ApplicationContext, discord_user: discord.User, patreon_id: str
     ):
-        patreon_member, includes = await self.api.get_member(member=patreon_id)
+        async with httpx.AsyncClient() as client:
+            patreon_member = await get_member(client=client, member_id=patreon_id)
 
         if patreon_member is None:
-            await ctx.respond(f"No Patreon account found for {patreon_id=}")
+            await ctx.respond(f"No Patreon account found for patreon_id `{patreon_id}`")
+            return
 
         patreon_id_already_linked = False
         previous_linked_discord = None
@@ -216,12 +239,21 @@ class Patreon(commands.Cog):
                 discord_name=discord_user.name,
             )
 
-        if patreon_id_already_linked:
+        if patreon_id_already_linked and previous_linked_discord != discord_user.name:
+            previous_user = discord.utils.get(
+                ctx.guild.members, name=previous_linked_discord
+            )
             await ctx.respond(
-                f"Linked {discord_user} to {patreon_id=} (was previously linked to {previous_linked_discord})"
+                f"Linked {discord_user.mention} to patreon_id `{patreon_id}` (was previously linked to {previous_user.mention if previous_user else previous_linked_discord})"
+            )
+        elif patreon_id_already_linked and previous_linked_discord == discord_user.name:
+            await ctx.respond(
+                f"{discord_user.mention} was already linked to `{patreon_id}`"
             )
         else:
-            await ctx.respond(f"Linked {discord_user} to {patreon_id=}")
+            await ctx.respond(
+                f"Linked {discord_user.mention} to patreon_id `{patreon_id}`"
+            )
 
     @discord.slash_command(
         description="Unlink (disconnect) a Discord account from their Patreon account"
@@ -240,10 +272,12 @@ class Patreon(commands.Cog):
                 )
                 return
             elif linked_patreon_id == patreon_id:
-                await ctx.respond(f"Unlinked {discord_user} from {patreon_id}")
+                await ctx.respond(
+                    f"Unlinked {discord_user.mention} from patreon_id `{patreon_id}`"
+                )
             else:
                 await ctx.respond(
-                    f"{discord_user} has patreon_id=`{linked_patreon_id}` linked not `{patreon_id}`, account **not unlinked**"
+                    f"{discord_user.mention} has patreon_id=`{linked_patreon_id}` linked not `{patreon_id}`, account **not unlinked**"
                 )
 
     @discord.slash_command(description="Search Patreon for a specific identifier")
@@ -253,80 +287,120 @@ class Patreon(commands.Cog):
         ctx: ApplicationContext,
         email: str | None,
         patreon_id: str | None,
-        # discord_id: str | None,
+        discord_user: discord.User | None,
         name: str | None,
         notes: str | None,
     ):
         await ctx.respond(
             embed=create_patreon_search_embed(
-                email=email, patreon_id=patreon_id, name=name, notes=notes
+                email=email,
+                patreon_id=patreon_id,
+                discord_user=discord_user,
+                name=name,
+                notes=notes,
             )
         )
 
-        found_email = None
-        found_patreon_id = None
-        possible_names: list[patreon_api_types.Member] = []
+        found_email: PatreonMember | None = None
+        found_patreon_id: PatreonMember | None = None
+        found_discord_user: PatreonMember | None = None
+        possible_names: list[PatreonMember] = []
+        possible_notes: list[PatreonMember] = []
 
-        # members, related_objects = await self.api.get_campaign_members(
-        #     campaign=PATREON_CAMPAIGN_ID, all_includes_all_fields=True, fetch_all=True
-        # )
-        members, related_objects = await self.fetch_members()
+        # members = await self.fetch_members()
+        async with httpx.AsyncClient() as client:
+            # get_campaign_members yields successfully more populated dicts per page
+            # so we can just take the last value when we're getting everyone
+            msg: discord.WebhookMessage = await ctx.respond(f"Fetching members")
+            async for members in get_campaign_members(client=client):
+                await msg.edit(f"Fetching members ({len(members)} found so far)")
+                print(f"Fetching members ({len(members)} found so far)")
+
+        # TODO: do we have exactly 500 members? seems unlikely, are we being capped or what
+        # logger.warning(f"{json.dumps(members)}")
         print(f"{len(members)=}")
-        # pprint(related_objects)
+        for key, value in members.items():
+            # print(f"members[0]={value}")
+            break
 
         # https://www.patreon.com/api/pledge-events?filter[patron.id]=44516775&filter[escape_pagination]=true&include=subscription.null,pledge.campaign.null&fields[campaign]=pay_per_name&fields[subscription]=amount_cents&fields[pledge_event]=pledge_payment_status,payment_status,date,type,tier_title&fields[pledge]=amount_cents,currency,status,cadence&json-api-version=1.0&json-api-use-default-includes=false
         # https://www.patreon.com/api/members/cd68584c-cc42-4b3b-b7b7-1ea49b29df1a?include=reward%2Crecent_charges%2Cuser%2Crecent_charges.post%2Crecent_charges.campaign.null&fields[user]=full_name%2Cthumb_url%2Curl%2Cis_follower%2Cpatron_status&fields[campaign]=has_annual_pledge&fields[member]=pledge_relationship_start%2Cnote%2Ccan_be_messaged%2Cdiscord_vanity&fields[post]=title&fields[charge]=date%2Camount_cents%2Ccurrency%2Cstatus%2Cis_refundable%2Cpartial_annual_refund_data%2Cunderlying_charge_type%2Cunderlying_charge_id%2Csupported_period_start%2Csupported_period_end&json-api-use-default-includes=false&json-api-version=1.0
 
         if email:
-            found_email = one_or_none(lambda x: x.email == email, members)
+            found_email = one_or_none(lambda x: x["email"] == email, members.values())
 
         if patreon_id:
-            found_patreon_id = one_or_none(lambda x: x.id == patreon_id, members)
+            found_patreon_id = members.get(patreon_id)
+
+        if discord_user:
+            for member in members.values():
+                if member["email"] == "eric58391@gmail.com":
+                    print(f"{member['email']} id={member['discord_user_id']}")
+            found_discord_user = one_or_none(
+                lambda x: x["discord_user_id"] == discord_user.id, members.values()
+            )
+
+        if notes:
+            for member in members.values():
+                if notes in member["note"]:
+                    possible_notes.append(member)
 
         name_chunks = name.split() if name else []
         possible_names = list(
             filter(
-                lambda x: any(
-                    chunk in x.full_name for chunk in name_chunks if x.full_name
-                ),
-                members,
+                lambda x: any(chunk in x["name"] for chunk in name_chunks),
+                members.values(),
             )
         )
 
+        # TODO: include pledge history again
         if found_email:
-            tiers = {
-                t.id: t
-                for t in filter(
-                    lambda x: x.id in found_email.currently_entitled_tiers,
-                    related_objects.get(patreon_api_types.PatreonResourceType.tier, []),
-                )
-            }
-            pledge_histories = [
-                p
-                for p in filter(
-                    lambda x: x.id in found_email.pledge_history,
-                    related_objects.get(
-                        patreon_api_types.PatreonResourceType.pledge_event, []
-                    ),
-                )
-            ]
+            # tiers = {
+            #     t.id: t
+            #     for t in filter(
+            #         lambda x: x.id in found_email.currently_entitled_tiers,
+            #         related_objects.get(patreon_api_types.PatreonResourceType.tier, []),
+            #     )
+            # }
+            # pledge_histories = [
+            #     p
+            #     for p in filter(
+            #         lambda x: x.id in found_email.pledge_history,
+            #         related_objects.get(
+            #             patreon_api_types.PatreonResourceType.pledge_event, []
+            #         ),
+            #     )
+            # ]
 
-            pledge_histories = list(
-                reversed(sorted(pledge_histories, key=lambda p: p.date))
-            )
+            # pledge_histories = list(
+            #     reversed(sorted(pledge_histories, key=lambda p: p.date))
+            # )
 
             await ctx.respond(
                 embeds=[
-                    create_patreon_embed(found_email, tiers=tiers),
-                    create_pledge_history_embed(pledge_histories=pledge_histories[:5]),
+                    create_patreon_embed(found_email),
+                    create_pledge_history_embed(
+                        pledge_histories=found_email["pledge_history"]
+                    ),
                 ]
             )
         elif found_patreon_id:
             await ctx.respond(embed=create_patreon_embed(found_patreon_id))
+        elif found_discord_user:
+            user = discord.utils.get(
+                ctx.guild.members, id=found_discord_user["discord_user_id"]
+            )
+            await ctx.respond(
+                embed=create_patreon_embed(found_discord_user, discord_user=user)
+            )
         elif possible_names:
             await ctx.respond(f"Showing up to 5 matches by name: ")
             for poss_name in possible_names:
                 await ctx.respond(embed=create_patreon_embed(poss_name))
+        elif possible_notes:
+            await ctx.respond(f"Showing up to 5 matches by notes:")
+            for note in possible_notes:
+                await ctx.respond(embed=create_patreon_embed(note))
         else:
             await ctx.respond(
                 f"No patreon member (searched {len(members)} members) found."

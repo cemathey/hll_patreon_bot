@@ -1,0 +1,2430 @@
+{
+    "data": [
+        {
+            "attributes": {},
+            "id": "51abf60f-0dea-422d-b153-b69bd85e0b99",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1339256056",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:157113733",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "520ea9df-c5b8-41b9-abeb-e09dc087453f",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:117204779",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1074504154",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:117204779",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5285b5d1-a568-46bd-a9a1-19f5a75f43bd",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:100983589",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1151559503",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1131945536",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1112426866",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1093512232",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1074504059",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1055880200",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1037223448",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598423",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818265",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011564",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259321",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:100983589",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_start:158942977",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_delete:92396917",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1074504017",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1055880151",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1037223396",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598369",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818207",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011500",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259248",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:935309044",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283319",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:881317045",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:92396917",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "534e380b-646c-456f-a365-7b6a7d272d5b",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:95277578",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1055880162",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1037223407",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598381",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818219",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011513",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259264",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:935309066",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283342",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:95277578",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "53b3e420-5fcc-489b-beac-f32b6fc257a1",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1321320697",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1300353251",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1279593689",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1258799028",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1238305180",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1217887239",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1197490709",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1177309647",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:132154116",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "53d1d659-5aa3-4158-b60c-f8caa002c4cb",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:981011516",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259269",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:935309072",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283349",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:95759368",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "543e927f-d7b4-422a-aeb8-839d4d51c9ed",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:129126705",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1217601703",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1197203871",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1177067028",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1156968649",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:129126705",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "546371cd-9d1c-47ab-9c86-1db65610ae97",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1323704827",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:155525469",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "560e7297-6b5d-4440-8fc5-ebabad2a1b4e",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1319300859",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:154048656",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "56161d59-3a29-4fde-8bef-17f6fe9b8913",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:107526839",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598481",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:107526839",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5667c3a2-7c0d-4f0b-bed5-b8c95ffcec3a",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1334868534",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1313845896",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1293032826",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1272494577",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1251980613",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1231739389",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1211509799",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1191387022",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1171520511",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1151559618",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1131945662",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:126471794",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5682fc65-dffd-42b0-8e79-50b9777e7db1",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:103042192",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1074504062",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1055880203",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1037223452",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598427",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818269",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011570",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:103042192",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "57a19f2b-7305-4295-b518-f4e6d0604e97",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:935309052",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283328",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:881317055",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:94319191",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5931e192-ac38-444c-9d9e-2aff626762f1",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:999818233",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011531",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259286",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:935309090",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_downgrade:97063740",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283345",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:95602258",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5972990e-7ce3-4b96-be01-5d7307e44340",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:119912769",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1272494552",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1251980588",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1231739364",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1211509772",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1191386993",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1171520482",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1151559581",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1131945621",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1112426962",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1093512333",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:119912769",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5a72ecf7-44ca-4adf-80b7-e73cf5c62484",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:91642148",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1018598361",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818198",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:981011491",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:962259239",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:935309035",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:908283310",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:881317036",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:854550084",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:91642148",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5acb0c0f-9dcd-4549-a3c6-9d1c74081b1b",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:98763708",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:98763708",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5ae970d1-cebb-474e-a0b3-5500a278da2b",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "subscription:1337906747",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:1316695060",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:153245094",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        },
+        {
+            "attributes": {},
+            "id": "5b9ca0e8-264c-4f60-a568-a7da5bd8fddb",
+            "relationships": {
+                "pledge_history": {
+                    "data": [
+                        {
+                            "id": "pledge_delete:105999040",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "subscription:999818325",
+                            "type": "pledge-event"
+                        },
+                        {
+                            "id": "pledge_start:105999040",
+                            "type": "pledge-event"
+                        }
+                    ]
+                }
+            },
+            "type": "member"
+        }
+    ],
+    "included": [
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "EUR",
+                "date": "2024-02-13T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1339256056",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "EUR",
+                "date": "2024-01-13T19:46:11.860+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:157113733",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-02-01T02:13:37.217+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:117204779",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1074504154",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-25T13:29:27.627+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:117204779",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-01T14:05:54.284+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:100983589",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1151559503",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1131945536",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-03-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1112426866",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-02-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1093512232",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1074504059",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1055880200",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1037223448",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598423",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818265",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011564",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259321",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-18T20:28:57.423+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:100983589",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-01-31T20:46:08.159+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:158942977",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-25T17:34:22.860+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:92396917",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1074504017",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1055880151",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1037223396",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598369",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818207",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011500",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259248",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309044",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283319",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:881317045",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-03-07T07:34:51.725+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:92396917",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-01T18:11:38.942+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:95277578",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1055880162",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1037223407",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598381",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818219",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011513",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259264",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309066",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283342",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-04-10T01:24:45.681+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:95277578",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-01-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1321320697",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-12-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1300353251",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-11-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1279593689",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-10-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1258799028",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-09-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1238305180",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-08-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1217887239",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-07-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1197490709",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-06-24T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1177309647",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-24T00:21:37.305+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:132154116",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 700,
+                "currency_code": "CAD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Declined",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011516",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 700,
+                "currency_code": "CAD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259269",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 700,
+                "currency_code": "CAD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309072",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 700,
+                "currency_code": "CAD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283349",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 700,
+                "currency_code": "CAD",
+                "date": "2022-04-15T23:02:03.030+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:95759368",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-09-03T06:15:23.830+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:129126705",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-08-23T00:00:00.000+00:00",
+                "payment_status": "Deleted",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1217601703",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-07-23T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1197203871",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-06-23T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1177067028",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-23T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1156968649",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-04-23T01:42:22.435+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:129126705",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-02-01T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1323704827",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-12-31T17:11:26.025+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:155525469",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-01-17T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1319300859",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-12-17T03:50:05.595+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:154048656",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 400,
+                "currency_code": "GBP",
+                "date": "2022-10-08T08:39:52.867+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:107526839",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 400,
+                "currency_code": "GBP",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598481",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 400,
+                "currency_code": "GBP",
+                "date": "2022-09-04T20:51:21.093+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:107526839",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-02-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1334868534",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1313845896",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1293032826",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1272494577",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1251980613",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1231739389",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1211509799",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1191387022",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1171520511",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1151559618",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1131945662",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-03-28T00:37:10.990+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:126471794",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-19T03:34:58.832+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:103042192",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1074504062",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1055880203",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1037223452",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598427",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818269",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011570",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-14T00:37:24.697+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:103042192",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Declined",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309052",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283328",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:881317055",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-03-31T18:39:42.742+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:94319191",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Declined",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818233",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011531",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259286",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309090",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-02T03:27:26.032+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_downgrade"
+            },
+            "id": "pledge_downgrade:97063740",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283345",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-04-14T00:19:01.075+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:95602258",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-11-03T01:59:29.484+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:119912769",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1272494552",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1251980588",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1231739364",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1211509772",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1191386993",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1171520482",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1151559581",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1131945621",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-03-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1112426962",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-02-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1093512333",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-01-21T03:04:31.348+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:119912769",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-20T03:19:07.742+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:91642148",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598361",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818198",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011491",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259239",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309035",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283310",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:881317036",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-03-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:854550084",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-02-28T00:46:29.552+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:91642148",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 400,
+                "currency_code": "GBP",
+                "date": "2022-05-28T20:48:20.109+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:98763708",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 400,
+                "currency_code": "GBP",
+                "date": "2022-05-22T17:05:30.629+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:98763708",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-02-09T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1337906747",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2024-01-09T00:00:00.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1316695060",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2023-12-08T23:32:23.799+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:153245094",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-12T16:28:11.708+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:105999040",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818325",
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "currency_code": "USD",
+                "date": "2022-08-18T02:40:30.804+00:00",
+                "payment_status": null,
+                "tier_id": "8348592",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:105999040",
+            "type": "pledge-event"
+        }
+    ],
+    "links": {
+        "next": "https://www.patreon.com/api/oauth2/v2/campaigns/8290127/members?include=pledge_history&fields%5Bpledge-event%5D=payment_status%2Ctype%2Cdate%2Ccurrency_code%2Ctier_id%2Camount_cents%2Ctier_title&page%5Bcursor%5D=02Uemaqo4Z9cFChj0x6UZi30K7"
+    },
+    "meta": {
+        "pagination": {
+            "cursors": {
+                "next": "02Uemaqo4Z9cFChj0x6UZi30K7"
+            },
+            "total": 501
+        }
+    }
+}

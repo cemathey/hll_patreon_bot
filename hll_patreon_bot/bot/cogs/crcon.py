@@ -1,31 +1,33 @@
 from datetime import datetime, timezone
-from logging import getLogger
+from functools import cached_property
 from pprint import pprint
 
 import discord
 import httpx
-from bot.constants import API_KEY_FORMAT, CRCON_API_KEY, CRCON_URL, PATREON_HOST_NAME
-from bot.integrations import crcon
-from bot.models import enter_session
-from bot.types import PlayerProfileType
-from bot.utils import (
-    get_set_crcon_record,
-    get_set_discord_record,
-    link_primary_crcon_to_discord,
-    link_sponsored_crcon_to_discord,
-    one_or_none,
-    raise_on_4xx_5xx,
-    unlink_primary_crcon_from_discord,
-    user_as_unique_name,
-    with_permission,
-)
 from discord.commands import ApplicationContext
 from discord.ext import commands
+from loguru import logger
 from patreon_v2 import typedefs as patreon_api_types
 from patreon_v2.async_api import AsyncAPI as PatreonAPI
 from sqlalchemy import select
 
-logger = getLogger(__name__)
+from hll_patreon_bot.bot.constants import (
+    API_KEY_FORMAT,
+    CRCON_API_KEY,
+    CRCON_URL,
+    PATREON_HOST_NAME,
+)
+from hll_patreon_bot.bot.utils import raise_on_4xx_5xx, with_permission
+from hll_patreon_bot.database.models import enter_session
+from hll_patreon_bot.database.utils import (
+    get_primary_crcon_record,
+    get_set_discord_record,
+    link_primary_crcon_to_discord,
+    link_sponsored_crcon_to_discord,
+    unlink_primary_crcon_from_discord,
+)
+from hll_patreon_bot.integrations.crcon import crcon
+from hll_patreon_bot.integrations.crcon.types import PlayerProfileType
 
 
 def create_crcon_embed(player: PlayerProfileType) -> discord.Embed:
@@ -54,8 +56,7 @@ class Crcon(commands.Cog):
         self.bot = bot
         self.crcon_url = crcon_url or CRCON_URL
 
-    # TODO make this better
-    @property
+    @cached_property
     def client(self) -> httpx.AsyncClient:
         return httpx.AsyncClient(
             headers={"Authorization": API_KEY_FORMAT.format(api_key=CRCON_API_KEY)},
@@ -88,7 +89,7 @@ class Crcon(commands.Cog):
             await ctx.respond(e)
             crcon_record = None
 
-        pprint(crcon_record)
+        logger.debug(f"link_primary_crcon {crcon_record=}")
 
         if not crcon_record and not force:
             await ctx.respond(
@@ -121,14 +122,12 @@ class Crcon(commands.Cog):
             return
 
         with enter_session() as session:
-            deleted_player_ids = unlink_primary_crcon_from_discord(
+            deleted_player_id = unlink_primary_crcon_from_discord(
                 session=session, discord_name=discord_user.name
             )
 
         # TODO: include main/sponsored status
-        await ctx.respond(
-            f"Unlinked {discord_user} from {','.join(deleted_player_ids)}"
-        )
+        await ctx.respond(f"Unlinked {discord_user} from {deleted_player_id}")
 
     @discord.slash_command(description="")
     async def link_sponsored_crcon(
@@ -140,6 +139,9 @@ class Crcon(commands.Cog):
         # use this instead of force
         # https://docs.pycord.dev/en/stable/api/clients.html#discord.Bot.wait_for
     ):
+        if not with_permission(ctx):
+            return
+
         try:
             crcon_record = await crcon.fetch_player(
                 client=self.client, rcon_url=CRCON_URL, player_id=player_id
@@ -149,8 +151,7 @@ class Crcon(commands.Cog):
             await ctx.respond(e)
             crcon_record = None
 
-        pprint(crcon_record)
-        # print(f"crcon_record = {crcon_record['steam_id_64'] if crcon_record else None}")
+        logger.debug(f"link_sponsored_crcon {crcon_record=}")
 
         if not crcon_record and not force:
             await ctx.respond(
@@ -173,6 +174,28 @@ class Crcon(commands.Cog):
         else:
             await ctx.respond(f"Linked {player_id} to {discord_user}")
 
+    @discord.slash_command(
+        description="Set the primary CRCON accounts VIP expiration based on their Patreon status"
+    )
+    async def sync_vip_status(
+        self, ctx: ApplicationContext, discord_user: discord.User
+    ):
+        with enter_session() as session:
+            discord_record = get_set_discord_record(
+                session=session, discord_user_name=discord_user.name
+            )
+            player_record = get_primary_crcon_record(
+                session=session, discord_user_name=discord_user.name
+            )
+
+            if player_record:
+                pass
+
+            else:
+                await ctx.respond(
+                    f"{discord_user} does not have a primary CRCON account linked"
+                )
+
     @discord.slash_command(description="Add VIP to the given discord account")
     async def add_vip(
         self,
@@ -183,7 +206,8 @@ class Crcon(commands.Cog):
         # Look up the CRCON player ID or fail
         # Look up the discord ID
         # Get the name automatically
-        pass
+        if not with_permission(ctx):
+            return
 
     @discord.slash_command(description="Remove VIP from the given discord account")
     async def remove_vip(self, ctx: ApplicationContext, discord_user: discord.User):

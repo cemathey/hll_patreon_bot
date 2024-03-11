@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TypedDict
 
+from hll_patreon_bot.integrations.patreon.types import ChargeStatus, PatronStatus
+
 
 class PatreonTriggerResource(enum.Enum):
     MEMBER = "members"
@@ -13,30 +15,6 @@ class PatreonTriggerAction(enum.Enum):
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
-
-
-class PatronStatus(enum.Enum):
-    active_patron = "Active"
-    declined_patron = "Declined"
-    former_patron = "Former"
-    none = None
-
-    def is_successful(self):
-        return self == PatronStatus.active_patron
-
-
-class ChargeStatus(enum.Enum):
-    paid = "Paid"
-    declined = "Declined"
-    deleted = "Deleted"
-    pending = "Pending"
-    refunded = "Refunded"
-    fraud = "Fraud"
-    other = "Other"
-    none = None
-
-    def is_successful(self) -> bool:
-        return self == ChargeStatus.paid
 
 
 @dataclass

@@ -1,0 +1,518 @@
+{
+    "data": [
+        {
+            "attributes": {
+                "date": "2024-01-31T20:46:08.159+00:00",
+                "payment_status": null,
+                "pledge_payment_status": "valid",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:158942977",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "158942977",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/158942977"
+                    }
+                },
+                "subscription": {
+                    "data": null
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2023-01-25T17:34:22.860+00:00",
+                "payment_status": null,
+                "pledge_payment_status": "valid",
+                "tier_title": "VIP Member",
+                "type": "pledge_delete"
+            },
+            "id": "pledge_delete:92396917",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": null
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2023-01-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1074504017",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "1074504017",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/1074504017"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-12-01T07:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1055880151",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "1055880151",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/1055880151"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-11-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1037223396",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "1037223396",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/1037223396"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-10-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:1018598369",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "1018598369",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/1018598369"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-09-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:999818207",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "999818207",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/999818207"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-08-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:981011500",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "981011500",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/981011500"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-07-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:962259248",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "962259248",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/962259248"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-06-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:935309044",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "935309044",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/935309044"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-05-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:908283319",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "908283319",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/908283319"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-04-01T06:59:59.000+00:00",
+                "payment_status": "Paid",
+                "pledge_payment_status": null,
+                "tier_title": "VIP Member",
+                "type": "subscription"
+            },
+            "id": "subscription:881317045",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": {
+                        "id": "881317045",
+                        "type": "subscription"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/subscription/881317045"
+                    }
+                }
+            },
+            "type": "pledge-event"
+        },
+        {
+            "attributes": {
+                "date": "2022-03-07T07:34:51.725+00:00",
+                "payment_status": null,
+                "pledge_payment_status": "valid",
+                "tier_title": "VIP Member",
+                "type": "pledge_start"
+            },
+            "id": "pledge_start:92396917",
+            "relationships": {
+                "pledge": {
+                    "data": {
+                        "id": "92396917",
+                        "type": "pledge"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/pledges/92396917"
+                    }
+                },
+                "subscription": {
+                    "data": null
+                }
+            },
+            "type": "pledge-event"
+        }
+    ],
+    "included": [
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "cadence": 1,
+                "currency": "USD",
+                "status": "valid"
+            },
+            "id": "158942977",
+            "relationships": {
+                "campaign": {
+                    "data": {
+                        "id": "8290127",
+                        "type": "campaign"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/campaigns/8290127"
+                    }
+                }
+            },
+            "type": "pledge"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "cadence": 1,
+                "currency": "USD",
+                "status": "valid"
+            },
+            "id": "92396917",
+            "relationships": {
+                "campaign": {
+                    "data": {
+                        "id": "8290127",
+                        "type": "campaign"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/campaigns/8290127"
+                    }
+                }
+            },
+            "type": "pledge"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "1074504017",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "1055880151",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "1037223396",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "1018598369",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "999818207",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "981011500",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "962259248",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "935309044",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "908283319",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500
+            },
+            "id": "881317045",
+            "type": "subscription"
+        },
+        {
+            "attributes": {
+                "pay_per_name": "month"
+            },
+            "id": "8290127",
+            "type": "campaign"
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "cursors": {
+                "next": null
+            },
+            "total": 13
+        }
+    }
+}

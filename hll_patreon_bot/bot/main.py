@@ -5,6 +5,7 @@ from pathlib import Path
 
 import discord
 
+from ..database.models import engine
 from .constants import (
     API_KEY_FORMAT,
     CRCON_API_KEY,
@@ -16,7 +17,6 @@ from .constants import (
     PATREON_CAMPAIGN_ID,
     PATREON_HOST_NAME,
 )
-from .models import engine
 
 mandatory_variables = {
     "CRCON_API_KEY": CRCON_API_KEY,
@@ -40,17 +40,19 @@ intents.message_content = True
 
 bot = discord.Bot(intents=intents)
 
-
 # bot.load_extensions("cogs.crcon", "cogs.patreon", "cogs.user", package="..")
 # bot.load_extension("cogs.crcon")
 # bot.load_extension(".cogs.crcon", package="hll_patreon_bot")
 
 
 def load_all_cogs():
-    for cog in os.listdir(Path("./cogs")):
+    path = os.getenv("PYTHON_PATH")
+    # print(f"{path=}")
+    for cog in os.listdir(Path("./hll_patreon_bot/bot/cogs")):
         if cog.endswith(".py"):
             try:
-                cog = f"cogs.{cog.replace('.py', '')}"
+                cog = f"hll_patreon_bot.bot.cogs.{cog.replace('.py', '')}"
+                print(f"Loading {cog=}")
                 bot.load_extension(cog)
             except Exception as e:
                 print(f"{cog} can not be loaded:")
@@ -61,9 +63,16 @@ def load_all_cogs():
 headers = {"Authorization": API_KEY_FORMAT.format(api_key=CRCON_API_KEY)}
 
 
+# @bot.listen()
+# async def on_connect():
+#     # if bot.auto_sync_commands:
+#     await bot.sync_commands(force=True)
+#     print(f"{bot.user.name} connected.")
+
+
 @bot.listen()
 async def on_ready():
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    print(f"Logged in as {bot.user} (ID: {bot.user.id})")  # type: ignore
     print("------")
 
 
@@ -73,4 +82,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+    load_all_cogs()
     bot.run(DISCORD_BOT_TOKEN)

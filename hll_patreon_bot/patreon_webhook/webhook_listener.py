@@ -6,7 +6,6 @@ from logging import getLogger
 import aiohttp
 import discord
 import httpx
-from bot.constants import API_KEY_FORMAT, CRCON_API_KEY
 from patreon_webhook.actions import lookup_action, lookup_parser
 from patreon_webhook.constants import PATREON_TRIGGER_DELIMITER
 from patreon_webhook.discord import lookup_action_embed
@@ -19,6 +18,8 @@ from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.routing import Route
+
+from hll_patreon_bot.bot.constants import API_KEY_FORMAT, CRCON_API_KEY
 
 logger = getLogger("uvicorn")
 

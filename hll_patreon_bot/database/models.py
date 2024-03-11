@@ -1,14 +1,12 @@
 from contextlib import contextmanager
 from datetime import datetime, timezone
-from logging import getLogger
 from typing import Any, Generator, Optional
 
 import sqlalchemy.orm.exc
+from loguru import logger
 from sqlalchemy import CheckConstraint, Column, ForeignKey, Index, Table, create_engine
 from sqlalchemy.event import listens_for
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, relationship
-
-logger = getLogger(__name__)
 
 engine = create_engine("sqlite:///file:db_data/db.sqlite?mode=rwc&uri=true", echo=True)
 

@@ -6,10 +6,20 @@ from typing import Any
 from urllib.parse import urljoin
 
 import httpx
-from bot.constants import CRCON_SERVER_NUMBER, CRCON_URL, MISSING_PLAYER_NAME
-from bot.types import PlayerProfileType, PlayerVIPType, RconAPIResponse, VipPlayer
-from bot.utils import one_or_none
 from loguru import logger
+
+from hll_patreon_bot.bot.constants import (
+    CRCON_SERVER_NUMBER,
+    CRCON_URL,
+    MISSING_PLAYER_NAME,
+)
+from hll_patreon_bot.bot.utils import one_or_none
+from hll_patreon_bot.integrations.crcon.types import (
+    PlayerProfileType,
+    PlayerVIPType,
+    RconAPIResponse,
+    VipPlayer,
+)
 
 
 async def add_vip(

@@ -3,16 +3,17 @@ from pprint import pprint
 
 import discord
 import httpx
-from bot.constants import CRCON_URL, PATREON_HOST_NAME
-from bot.integrations import crcon
-from bot.models import Discord, Patreon, Player, enter_session
-from bot.types import PlayerProfileType
-from bot.utils import get_set_discord_record, one_or_none, with_permission
 from discord.commands import ApplicationContext
 from discord.ext import commands
 from patreon_v2 import typedefs as patreon_api_types
 from patreon_v2.async_api import AsyncAPI as PatreonAPI
 from sqlalchemy import select
+
+from hll_patreon_bot.bot.constants import CRCON_URL, PATREON_HOST_NAME
+from hll_patreon_bot.database.models import Discord, Patreon, Player, enter_session
+from hll_patreon_bot.database.utils import get_set_discord_record
+from hll_patreon_bot.integrations import crcon
+from hll_patreon_bot.integrations.crcon.types import PlayerProfileType
 
 
 class User(commands.Cog):

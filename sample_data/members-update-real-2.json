@@ -1,0 +1,150 @@
+{
+    "data": {
+        "attributes": {
+            "campaign_lifetime_support_cents": 5000,
+            "currently_entitled_amount_cents": 500,
+            "email": "eric58391@gmail.com",
+            "full_name": "Christopher Mathey",
+            "is_follower": false,
+            "is_free_trial": false,
+            "last_charge_date": "2024-01-31T20:46:10.000+00:00",
+            "last_charge_status": "Paid",
+            "lifetime_support_cents": 5000,
+            "next_charge_date": "2024-03-01T00:00:00.000+00:00",
+            "note": "",
+            "patron_status": "active_patron",
+            "pledge_cadence": 1,
+            "pledge_relationship_start": "2022-03-07T07:34:51.725+00:00",
+            "will_pay_amount_cents": 500
+        },
+        "id": "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e",
+        "relationships": {
+            "address": {
+                "data": null
+            },
+            "campaign": {
+                "data": {
+                    "id": "8290127",
+                    "type": "campaign"
+                },
+                "links": {
+                    "related": "https://www.patreon.com/api/oauth2/v2/campaigns/8290127"
+                }
+            },
+            "currently_entitled_tiers": {
+                "data": [
+                    {
+                        "id": "8348592",
+                        "type": "tier"
+                    }
+                ]
+            },
+            "user": {
+                "data": {
+                    "id": "719414",
+                    "type": "user"
+                },
+                "links": {
+                    "related": "https://www.patreon.com/api/oauth2/v2/user/719414"
+                }
+            }
+        },
+        "type": "member"
+    },
+    "included": [
+        {
+            "attributes": {
+                "created_at": "2022-02-26T14:51:33.000+00:00",
+                "creation_name": "creating a Gaming Community",
+                "discord_server_id": "722918218305503282",
+                "google_analytics_id": null,
+                "has_rss": false,
+                "has_sent_rss_notify": false,
+                "image_small_url": "https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8290127/65187d90ef454092907f9d5423330d9a/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/2.png?token-time=1707004800&token-hash=HHpDNlEd7jjFS8PIdHAE9kpw5ct4m0l969vVlMz0L94%3D",
+                "image_url": "https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8290127/65187d90ef454092907f9d5423330d9a/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/2.png?token-time=1707004800&token-hash=HHpDNlEd7jjFS8PIdHAE9kpw5ct4m0l969vVlMz0L94%3D",
+                "is_charged_immediately": true,
+                "is_monthly": true,
+                "is_nsfw": false,
+                "main_video_embed": null,
+                "main_video_url": null,
+                "one_liner": null,
+                "patron_count": 259,
+                "pay_per_name": "month",
+                "pledge_url": "/checkout/BEERHaus",
+                "published_at": "2022-02-26T15:11:37.000+00:00",
+                "rss_artwork_url": null,
+                "rss_feed_title": null,
+                "summary": "Saucymuffin's [BEER] haus and Squidd Cafe is a Hell Let Loose public server created by\u00a0 Saucymuffin, FreshBakedGoods, Squiddstv, and Raz_Bora in order to create one of the most popular servers in the HLL Community.\u00a0 Together we have stepped up to create a top ranked server by Creators for Creators and their communities.\u00a0 By pledging a $5 monthly donation you will receive VIP access to the server to skip the queue so you can play with the TOP Hell Let Loose streamers and youtubers!<br><br>See you on the battlefield!\u00a0",
+                "thanks_embed": null,
+                "thanks_msg": null,
+                "thanks_video_url": null,
+                "url": "https://www.patreon.com/BEERHaus",
+                "vanity": "BEERHaus"
+            },
+            "id": "8290127",
+            "type": "campaign"
+        },
+        {
+            "attributes": {
+                "about": "",
+                "created": "2015-04-22T22:26:37.000+00:00",
+                "first_name": "Christopher",
+                "full_name": "Christopher Mathey",
+                "hide_pledges": false,
+                "image_url": "https://c8.patreon.com/3/200/719414",
+                "is_creator": false,
+                "last_name": "Mathey",
+                "like_count": 0,
+                "social_connections": {
+                    "discord": {
+                        "url": null,
+                        "user_id": "296385262794178570"
+                    },
+                    "facebook": null,
+                    "google": null,
+                    "instagram": null,
+                    "reddit": null,
+                    "spotify": null,
+                    "spotify_open_access": null,
+                    "tiktok": null,
+                    "twitch": null,
+                    "twitter": null,
+                    "vimeo": null,
+                    "youtube": null
+                },
+                "thumb_url": "https://c8.patreon.com/3/200/719414",
+                "url": "https://www.patreon.com/user?u=719414",
+                "vanity": null
+            },
+            "id": "719414",
+            "type": "user"
+        },
+        {
+            "attributes": {
+                "amount_cents": 500,
+                "created_at": "2022-02-26T15:04:10.507+00:00",
+                "description": "A simple $5 monthly Donation that goes toward server upkeep and maintenance which garuntees you VIP white listing for the Saucymuffin's [BEER] Haus and Squidd Cafe server.",
+                "discord_role_ids": [
+                    "947148212534386738"
+                ],
+                "edited_at": "2022-02-26T15:11:28.288+00:00",
+                "image_url": null,
+                "patron_count": 270,
+                "post_count": 1,
+                "published": true,
+                "published_at": "2022-02-26T15:11:28.274+00:00",
+                "remaining": null,
+                "requires_shipping": false,
+                "title": "VIP Member",
+                "unpublished_at": null,
+                "url": "/checkout/BEERHaus?rid=8348592",
+                "user_limit": null
+            },
+            "id": "8348592",
+            "type": "tier"
+        }
+    ],
+    "links": {
+        "self": "https://www.patreon.com/api/oauth2/v2/members/52c7b310-8d73-4ce8-bfba-ef1caa58eb4e"
+    }
+}
