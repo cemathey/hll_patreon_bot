@@ -66,8 +66,6 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
     This is very similar to the Patreon webhook parser but defined separately
     in case we need to handle any special cases
     """
-    logger.error(f"parse_member {data=}")
-
     id_: str = data["data"]["id"]
     if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
         logger.info(f"data={data}")
