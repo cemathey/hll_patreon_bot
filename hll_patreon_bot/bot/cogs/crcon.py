@@ -7,16 +7,8 @@ import httpx
 from discord.commands import ApplicationContext
 from discord.ext import commands
 from loguru import logger
-from patreon_v2 import typedefs as patreon_api_types
-from patreon_v2.async_api import AsyncAPI as PatreonAPI
-from sqlalchemy import select
 
-from hll_patreon_bot.bot.constants import (
-    API_KEY_FORMAT,
-    CRCON_API_KEY,
-    CRCON_URL,
-    PATREON_HOST_NAME,
-)
+from hll_patreon_bot.bot.constants import API_KEY_FORMAT, CRCON_API_KEY, CRCON_URL
 from hll_patreon_bot.bot.utils import raise_on_4xx_5xx, with_permission
 from hll_patreon_bot.database.models import enter_session
 from hll_patreon_bot.database.utils import (

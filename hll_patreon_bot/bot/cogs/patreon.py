@@ -10,14 +10,7 @@ from cachetools import TTLCache, cached, cachedmethod
 from discord.commands import ApplicationContext
 from discord.ext import commands
 from loguru import logger
-from patreon_v2 import typedefs as patreon_api_types
-from patreon_v2.async_api import AsyncAPI as PatreonAPI
 
-from hll_patreon_bot.bot.constants import (
-    PATREON_ACCESS_TOKEN,
-    PATREON_CAMPAIGN_ID,
-    PATREON_HOST_NAME,
-)
 from hll_patreon_bot.bot.utils import one_or_none
 from hll_patreon_bot.database.models import enter_session
 from hll_patreon_bot.database.utils import (

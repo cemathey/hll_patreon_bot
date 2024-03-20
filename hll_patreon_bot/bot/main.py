@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import discord
+from loguru import logger
 
 from ..database.models import engine
 from .constants import (
@@ -16,6 +17,13 @@ from .constants import (
     PATREON_ACCESS_TOKEN,
     PATREON_CAMPAIGN_ID,
     PATREON_HOST_NAME,
+)
+
+logger.add(
+    "/code/logs/discord_bot.log",
+    level=os.getenv("LOG_LEVEL", "DEBUG"),
+    rotation="10 MB",
+    retention="10 days",
 )
 
 mandatory_variables = {
@@ -31,7 +39,7 @@ mandatory_variables = {
 
 for var, value in mandatory_variables.items():
     if not value:
-        print(f"{var} not set")
+        logger.error(f"{var} not set")
         sys.exit(1)
 
 
@@ -47,7 +55,6 @@ bot = discord.Bot(intents=intents)
 
 def load_all_cogs():
     path = os.getenv("PYTHON_PATH")
-    # print(f"{path=}")
     for cog in os.listdir(Path("./hll_patreon_bot/bot/cogs")):
         if cog.endswith(".py"):
             try:
@@ -57,23 +64,16 @@ def load_all_cogs():
             except Exception as e:
                 print(f"{cog} can not be loaded:")
                 raise e
-    print("Loaded all cogs")
+    logger.debug("Loaded all cogs")
 
 
 headers = {"Authorization": API_KEY_FORMAT.format(api_key=CRCON_API_KEY)}
 
 
-# @bot.listen()
-# async def on_connect():
-#     # if bot.auto_sync_commands:
-#     await bot.sync_commands(force=True)
-#     print(f"{bot.user.name} connected.")
-
-
 @bot.listen()
 async def on_ready():
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")  # type: ignore
-    print("------")
+    logger.info(f"Logged in as {bot.user} (ID: {bot.user.id})")  # type: ignore
+    logger.info("------")
 
 
 async def main():
