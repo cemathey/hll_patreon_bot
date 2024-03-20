@@ -2,7 +2,8 @@ version: "3.8"
 
 name: hll_patreon_bot
 services:
-    hll_discord_bot:
+    webhook_listener:
+        command: web_server
         environment:
             - LOG_LEVEL=${LOG_LEVEL}
             - CRCON_API_KEY=${CRCON_API_KEY}
@@ -17,7 +18,7 @@ services:
             - DISCORD_ADMIN_ROLE_IDS=${DISCORD_ADMIN_ROLE_IDS}
             - FORWARD_WEBHOOK=${FORWARD_WEBHOOK}
         init: true
-        container_name: hll_patreon_bot-${COMPOSE_PROJECT_NAME}
+        container_name: web_server-${COMPOSE_PROJECT_NAME}
         volumes:
             - ./logs:/code/logs
             - db-data:/code/db_data
@@ -27,5 +28,29 @@ services:
           dockerfile: ./Dockerfile
         ports:
             - 8888:8888
+    discord_bot:
+        command: discord_bot
+        environment:
+            - LOG_LEVEL=${LOG_LEVEL}
+            - CRCON_API_KEY=${CRCON_API_KEY}
+            - CRCON_URL=${CRCON_URL}
+            - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+            - DISCORD_APP_ID=${DISCORD_APP_ID}
+            - DISCORD_PUBLIC_KEY=${DISCORD_PUBLIC_KEY}
+            - PATREON_HOST_NAME=${PATREON_HOST_NAME}
+            - PATREON_ACCESS_TOKEN=${PATREON_ACCESS_TOKEN}
+            - PATREON_CAMPAIGN_ID=${PATREON_CAMPAIGN_ID}
+            - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+            - DISCORD_ADMIN_ROLE_IDS=${DISCORD_ADMIN_ROLE_IDS}
+            - FORWARD_WEBHOOK=${FORWARD_WEBHOOK}
+        init: true
+        container_name: discord_bot-${COMPOSE_PROJECT_NAME}
+        volumes:
+            - ./logs:/code/logs
+            - db-data:/code/db_data
+        restart: unless-stopped
+        image: build
+        build:
+          dockerfile: ./Dockerfile
 volumes:
     db-data:
