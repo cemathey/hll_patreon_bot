@@ -1,11 +1,11 @@
 import json
 import os
 from contextlib import asynccontextmanager
-from logging import getLogger
 
 import aiohttp
 import discord
 import httpx
+from loguru import logger
 from patreon_webhook.actions import lookup_action, lookup_parser
 from patreon_webhook.constants import PATREON_TRIGGER_DELIMITER
 from patreon_webhook.discord import lookup_action_embed
@@ -21,10 +21,15 @@ from starlette.routing import Route
 
 from hll_patreon_bot.bot.constants import API_KEY_FORMAT, CRCON_API_KEY
 
-logger = getLogger("uvicorn")
-
 CLIENT: httpx.AsyncClient | None = None
 WEBHOOK: discord.Webhook | None = None
+
+logger.add(
+    "/code/logs/webserver.log",
+    level=os.getenv("LOG_LEVEL", "DEBUG"),
+    rotation="10 MB",
+    retention="10 days",
+)
 
 
 def get_client():
