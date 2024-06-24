@@ -1,3 +1,4 @@
+import asyncio
 import json
 import urllib
 from datetime import datetime
@@ -128,6 +129,18 @@ async def fetch_player(
 
     res_body: RconAPIResponse = res.json()
     return res_body["result"]
+
+
+async def fetch_players(
+    client: httpx.AsyncClient, player_ids: list[str]
+) -> dict[str, PlayerProfileType]:
+    results = {}
+    async with asyncio.TaskGroup() as tg:
+        for player_id in player_ids:
+            task = tg.create_task(fetch_player(client=client, player_id=player_id))
+            results[player_id] = task
+
+    return {k: v.result() for k, v in results.items()}
 
 
 async def fetch_current_expiration(
