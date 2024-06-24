@@ -61,12 +61,12 @@ def get_crcon_record(session: Session, player_id: str) -> Player | None:
 
 
 def get_set_crcon_record(
-    session: Session, discord_record: Discord, player_id: str, main: bool
+    session: Session, discord_record: Discord, player_id: str
 ) -> Player:
     player_record = _get_crcon_record(session=session, player_id=player_id)
 
     if not player_record:
-        player_record = Player(player_id=player_id, main=main, discord=discord_record)
+        player_record = Player(player_id=player_id)
         logger.warning(
             f"Creating new player record {player_record} for {discord_record}"
         )
@@ -155,7 +155,6 @@ def link_primary_crcon_to_discord(
         session=session,
         discord_record=discord_record,
         player_id=player_id,
-        main=True,
     )
 
     stmt = (
@@ -176,6 +175,7 @@ def link_primary_crcon_to_discord(
         discord_player = DiscordPlayers()
         discord_player.discord = discord_record
         discord_player.player = player_record
+        discord_player.main = True
         session.add(discord_player)
         logger.warning(f"Linked {player_record} to {discord_record}")
 
@@ -224,7 +224,6 @@ def link_sponsored_crcon_to_discord(
         session=session,
         discord_record=discord_record,
         player_id=player_id,
-        main=False,
     )
 
     stmt = (
