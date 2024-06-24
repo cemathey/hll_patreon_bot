@@ -140,7 +140,7 @@ class Crcon(commands.Cog):
             )
         except httpx.HTTPError as e:
             logger.error(e)
-            await ctx.respond(e)
+            await ctx.respond(f"Unexpected error occurred: {e}")
             crcon_record = None
 
         logger.debug(f"link_sponsored_crcon {crcon_record=}")
