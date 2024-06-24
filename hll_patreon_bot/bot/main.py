@@ -20,7 +20,7 @@ from .constants import (
 )
 
 logger.add(
-    "/code/logs/discord_bot.log",
+    "./logs/discord_bot.log",
     level=os.getenv("LOG_LEVEL", "DEBUG"),
     rotation="10 MB",
     retention="10 days",
