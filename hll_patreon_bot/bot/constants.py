@@ -30,3 +30,5 @@ CRCON_VIP_NAME_FORMAT = "{name} | {email} | HLLPatreonBot"
 PATREON_REWARD_TIMEDELTA = timedelta(days=30)
 
 MISSING_PLAYER_NAME = "No player name"
+
+EMPTY_EMBED_FIELD = "\u200b"
