@@ -143,8 +143,7 @@ def unlink_patreon_from_discord(
 
 def link_primary_crcon_to_discord(
     session: Session, player_id: str, discord_name: str
-) -> tuple[bool, str | None]:
-    player_id_already_linked = False
+) -> str | None:
     previous_linked_discord: str | None = None
 
     discord_record = get_set_discord_record(
@@ -165,7 +164,6 @@ def link_primary_crcon_to_discord(
     discord_player = session.scalars(stmt).one_or_none()
 
     if discord_player:
-        player_id_already_linked = True
         previous_linked_discord = discord_player.discord.discord_name
         logger.warning(
             f"Linked {player_record} to {discord_record} was previously linked to {discord_player.discord}"
@@ -179,7 +177,7 @@ def link_primary_crcon_to_discord(
         session.add(discord_player)
         logger.warning(f"Linked {player_record} to {discord_record}")
 
-    return player_id_already_linked, previous_linked_discord
+    return previous_linked_discord
 
 
 def unlink_primary_crcon_from_discord(
@@ -212,8 +210,7 @@ def unlink_primary_crcon_from_discord(
 
 def link_sponsored_crcon_to_discord(
     session: Session, discord_name: str, player_id: str
-) -> tuple[bool, str | None]:
-    player_id_already_linked = False
+) -> str | None:
     previous_linked_discord: str | None = None
 
     discord_record = get_set_discord_record(
@@ -235,7 +232,6 @@ def link_sponsored_crcon_to_discord(
 
     discord_player = session.scalars(stmt).one_or_none()
     if discord_player:
-        player_id_already_linked = True
         previous_linked_discord = discord_player.discord.discord_name
         logger.warning(
             f"Tried to link {player_record} to {discord_record} but it was already linked"
@@ -244,10 +240,9 @@ def link_sponsored_crcon_to_discord(
         discord_player = DiscordPlayers()
         discord_player.discord = discord_record
         discord_player.player = player_record
-        logger.warning(f"Linked sponsored {player_record} to {discord_record}")
         session.add(discord_player)
 
-    return player_id_already_linked, previous_linked_discord
+    return previous_linked_discord
 
 
 def unlink_sponsored_crcon_from_discord(
