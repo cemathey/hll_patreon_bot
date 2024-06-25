@@ -19,6 +19,7 @@ from hll_patreon_bot.integrations.crcon.types import (
     PlayerProfileType,
     PlayerVIPType,
     RconAPIResponse,
+    ServerDetails,
     VipPlayer,
 )
 
@@ -160,3 +161,58 @@ async def fetch_current_expiration(
             vip_info["vip_name"] = MISSING_PLAYER_NAME
 
         return vip_info
+
+
+async def fetch_primary_server_details(
+    client: httpx.AsyncClient,
+    rcon_url: str = CRCON_URL,
+    endpoint: str = "api/get_connection_info",
+) -> ServerDetails:
+    url = urljoin(rcon_url, endpoint)
+    res = await client.get(url=url)
+
+    res_body: RconAPIResponse = res.json()
+
+    return {
+        "name": res_body["result"]["name"],
+        "server_number": res_body["result"]["server_number"],
+        "link": res_body["result"]["link"],
+    }
+
+
+async def fetch_secondary_server_details(
+    client: httpx.AsyncClient,
+    rcon_url: str = CRCON_URL,
+    endpoint: str = "api/server_list",
+) -> dict[str, ServerDetails]:
+    url = urljoin(rcon_url, endpoint)
+    res = await client.get(url=url)
+
+    res_body: RconAPIResponse = res.json()
+
+    return {
+        str(v["server_number"]): {
+            "name": v["name"],
+            "server_number": v["server_number"],
+            "link": v["link"],
+        }
+        for v in res_body["result"]
+    }
+
+
+async def fetch_server_details(
+    client: httpx.AsyncClient,
+    rcon_url: str = CRCON_URL,
+) -> dict[str, ServerDetails]:
+    # TODO: run in task group
+    primary_server = await fetch_primary_server_details(
+        client=client, rcon_url=rcon_url
+    )
+    secondary_servers = await fetch_secondary_server_details(
+        client=client, rcon_url=rcon_url
+    )
+
+    details: dict[str, ServerDetails] = {}
+    details[str(primary_server["server_number"])] = primary_server
+
+    return details | secondary_servers

@@ -183,7 +183,7 @@ def link_primary_crcon_to_discord(
 def unlink_primary_crcon_from_discord(
     session: Session, discord_name: str
 ) -> str | None:
-    deleted_player: str | None = None
+    deleted_player_id: str | None = None
     discord_record = get_set_discord_record(
         session=session, discord_user_name=discord_name
     )
@@ -195,7 +195,7 @@ def unlink_primary_crcon_from_discord(
     )
     discord_player = session.scalars(stmt).one_or_none()
     if discord_player:
-        deleted_player = discord_player.player.player_id
+        deleted_player_id = discord_player.player.player_id
         session.delete(discord_player)
         logger.warning(
             f"Unlinked primary {discord_player.player} from {discord_player.discord}"
@@ -205,7 +205,7 @@ def unlink_primary_crcon_from_discord(
             f"Tried to unlink primary for {discord_record} but they weren't linked"
         )
 
-    return deleted_player
+    return deleted_player_id
 
 
 def link_sponsored_crcon_to_discord(

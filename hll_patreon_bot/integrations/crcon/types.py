@@ -143,3 +143,9 @@ class VipPlayer(pydantic.BaseModel):
     name: str
     steam_id_64: str
     expiration_date: datetime | None
+
+
+class ServerDetails(TypedDict):
+    name: str
+    server_number: int
+    link: str

@@ -23,11 +23,14 @@ from hll_patreon_bot.database.utils import (
     unlink_primary_crcon_from_discord,
 )
 from hll_patreon_bot.integrations.crcon import crcon
-from hll_patreon_bot.integrations.crcon.types import PlayerProfileType
+from hll_patreon_bot.integrations.crcon.types import PlayerProfileType, ServerDetails
 
 
-def create_crcon_embed(player: PlayerProfileType) -> discord.Embed:
+def create_crcon_player_embed(
+    player: PlayerProfileType, server_details: dict[str, ServerDetails]
+) -> discord.Embed:
     embed = discord.Embed()
+    embed.title = "CRCON Player Record"
     embed.add_field(name="Player ID", value=player["steam_id_64"])
     embed.add_field(
         name="Name:", value=player["names"][0]["name"] if player["names"] else ""
@@ -36,15 +39,30 @@ def create_crcon_embed(player: PlayerProfileType) -> discord.Embed:
     embed.add_field(name="AKA: ", value=akas)
     if player["vips"]:
         for vip in player["vips"]:
-            if vip["server_number"]:
+            server = server_details.get(str(vip["server_number"]), {})
+            if server:
                 embed.add_field(
-                    name=f"VIP Status Server #{vip['server_number']}",
+                    name=f"VIP Status Server: {server.get('name')}",
                     value=f"Expires <t:{int(datetime.fromisoformat(vip['expiration']).timestamp())}:f>",
                     inline=False,
                 )
     embed.timestamp = datetime.now(tz=timezone.utc)
 
     return embed
+
+
+async def _fetch_crcon_player_record(
+    ctx: ApplicationContext, client: httpx.AsyncClient, player_id: str
+) -> PlayerProfileType | None:
+    try:
+        crcon_record = await crcon.fetch_player(
+            client=client, rcon_url=CRCON_URL, player_id=player_id
+        )
+    except httpx.HTTPError as e:
+        logger.error(e)
+        await ctx.respond(f"Unexpected error while fetching player record{e}")
+        crcon_record = None
+    return crcon_record
 
 
 class Crcon(commands.Cog):
@@ -60,6 +78,10 @@ class Crcon(commands.Cog):
             event_hooks={"response": [raise_on_4xx_5xx]},
         )
 
+    @property
+    async def server_details(self) -> dict[str, ServerDetails]:
+        return await crcon.fetch_server_details(self.client)
+
     @discord.slash_command(description="")
     async def link_primary_crcon(
         self,
@@ -73,14 +95,16 @@ class Crcon(commands.Cog):
         if not with_permission(ctx):
             return
 
-        try:
-            crcon_record = await crcon.fetch_player(
-                client=self.client, rcon_url=CRCON_URL, player_id=player_id
+        await ctx.defer()
+
+        player_embed: discord.Embed | None = None
+        crcon_record = await _fetch_crcon_player_record(
+            ctx=ctx, client=self.client, player_id=player_id
+        )
+        if crcon_record:
+            player_embed = create_crcon_player_embed(
+                crcon_record, server_details=await self.server_details
             )
-        except httpx.HTTPError as e:
-            logger.error(e)
-            await ctx.respond(e)
-            crcon_record = None
 
         logger.debug(f"link_primary_crcon {crcon_record=}")
         embed = discord.Embed()
@@ -95,7 +119,7 @@ class Crcon(commands.Cog):
                 session=session, player_id=player_id, discord_name=discord_user.name
             )
 
-        embed.title = "Link Primary CRCON Primary ID"
+        embed.title = "Primary"
         embed.add_field(name="Player ID", value=player_id)
         embed.description = f"Linked {discord_user.mention}"
         if previous_linked_discord:
@@ -104,7 +128,12 @@ class Crcon(commands.Cog):
             )
             embed.add_field(name="Previous Linked Discord", value=prev_user.mention)
 
-        await ctx.respond(embed=embed)
+        if player_embed:
+            embeds = [embed, player_embed]
+        else:
+            embeds = [embed]
+
+        await ctx.respond(embeds=embeds)
 
     @discord.slash_command(description="")
     async def unlink_primary_crcon(
@@ -118,6 +147,20 @@ class Crcon(commands.Cog):
                 session=session, discord_name=discord_user.name
             )
 
+        if not deleted_player_id:
+            # TODO: error message
+            await ctx.respond(f"")
+            return
+
+        player_embed: discord.Embed | None = None
+        crcon_record = await _fetch_crcon_player_record(
+            ctx=ctx, client=self.client, player_id=deleted_player_id
+        )
+        if crcon_record:
+            player_embed = create_crcon_player_embed(
+                crcon_record, server_details=await self.server_details
+            )
+
         # TODO: include main/sponsored status
         embed = discord.Embed()
         embed.description = f"Unlinked {discord_user.mention}"
@@ -125,7 +168,13 @@ class Crcon(commands.Cog):
             name="Player ID",
             value=deleted_player_id if deleted_player_id else str(None),
         )
-        await ctx.respond(embed=embed)
+
+        if player_embed:
+            embeds = [embed, player_embed]
+        else:
+            embeds = [embed]
+
+        await ctx.respond(embeds=embeds)
 
     @discord.slash_command(description="")
     async def link_sponsored_crcon(
@@ -140,16 +189,15 @@ class Crcon(commands.Cog):
         if not with_permission(ctx):
             return
 
-        try:
-            crcon_record = await crcon.fetch_player(
-                client=self.client, rcon_url=CRCON_URL, player_id=player_id
+        player_embed: discord.Embed | None = None
+        crcon_record = await _fetch_crcon_player_record(
+            ctx=ctx, client=self.client, player_id=player_id
+        )
+        logger.info(f"{player_id=} {crcon_record=}")
+        if crcon_record:
+            player_embed = create_crcon_player_embed(
+                crcon_record, server_details=await self.server_details
             )
-        except httpx.HTTPError as e:
-            logger.error(e)
-            await ctx.respond(f"Unexpected error occurred: {e}")
-            crcon_record = None
-
-        # logger.debug(f"link_sponsored_crcon {crcon_record=}")
 
         embed = discord.Embed()
         embed.title = "Link Sponsored CRCON Player ID"
@@ -163,16 +211,19 @@ class Crcon(commands.Cog):
                 session=session, discord_name=discord_user.name, player_id=player_id
             )
 
-        embed.add_field(name="Player ID", value=f"Linked to {discord_user.mention}")
-        embed.add_field(name="Player ID", value=player_id)
-        embed.description = f"Linked {discord_user.mention}"
+        embed.description = f"Player ID `{player_id}` Linked to {discord_user.mention}"
         if previous_linked_discord:
             prev_user = discord_name_as_user(
                 previous_linked_discord, members=ctx.guild.members
             )
             embed.add_field(name="Previous Linked Discord", value=prev_user.mention)
 
-        await ctx.respond(embed=embed)
+        if player_embed:
+            embeds = [embed, player_embed]
+        else:
+            embeds = [embed]
+
+        await ctx.respond(embeds=embeds)
 
     @discord.slash_command(
         description="Set the primary CRCON accounts VIP expiration based on their Patreon status"
@@ -225,7 +276,11 @@ class Crcon(commands.Cog):
         )
 
         if player:
-            await ctx.respond(embed=create_crcon_embed(player))
+            await ctx.respond(
+                embed=create_crcon_player_embed(
+                    crcon_record, server_details=await self.server_details
+                )
+            )
         else:
             await ctx.respond(f"{player_id} not found")
 
