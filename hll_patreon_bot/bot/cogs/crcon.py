@@ -9,7 +9,11 @@ from discord.ext import commands
 from loguru import logger
 
 from hll_patreon_bot.bot.constants import API_KEY_FORMAT, CRCON_API_KEY, CRCON_URL
-from hll_patreon_bot.bot.utils import raise_on_4xx_5xx, with_permission
+from hll_patreon_bot.bot.utils import (
+    discord_name_as_user,
+    raise_on_4xx_5xx,
+    with_permission,
+)
 from hll_patreon_bot.database.models import enter_session
 from hll_patreon_bot.database.utils import (
     get_primary_crcon_record,
@@ -24,7 +28,6 @@ from hll_patreon_bot.integrations.crcon.types import PlayerProfileType
 
 def create_crcon_embed(player: PlayerProfileType) -> discord.Embed:
     embed = discord.Embed()
-
     embed.add_field(name="Player ID", value=player["steam_id_64"])
     embed.add_field(
         name="Name:", value=player["names"][0]["name"] if player["names"] else ""
@@ -33,10 +36,12 @@ def create_crcon_embed(player: PlayerProfileType) -> discord.Embed:
     embed.add_field(name="AKA: ", value=akas)
     if player["vips"]:
         for vip in player["vips"]:
-            embed.add_field(
-                name=f"VIP Status {vip['server_number']}",
-                value=f"<t:{vip['expiration'].timestamp()}:f>",
-            )
+            if vip["server_number"]:
+                embed.add_field(
+                    name=f"VIP Status Server #{vip['server_number']}",
+                    value=f"Expires <t:{int(datetime.fromisoformat(vip['expiration']).timestamp())}:f>",
+                    inline=False,
+                )
     embed.timestamp = datetime.now(tz=timezone.utc)
 
     return embed
@@ -65,10 +70,6 @@ class Crcon(commands.Cog):
         # use this instead of force
         # https://docs.pycord.dev/en/stable/api/clients.html#discord.Bot.wait_for
     ):
-        # Find discord ID record, make if none
-        # Check CRCON for player ID existence, reject if not found unless forced
-        # Find player record, make if none
-        # Link them together
         if not with_permission(ctx):
             return
 
@@ -82,29 +83,28 @@ class Crcon(commands.Cog):
             crcon_record = None
 
         logger.debug(f"link_primary_crcon {crcon_record=}")
-
+        embed = discord.Embed()
         if not crcon_record and not force:
-            await ctx.respond(
-                f"No player found in CRCON for player_id=`{player_id}`, double check the player ID and reattempt with `force` set to True if you're sure."
-            )
+            embed.description = f"No player found in CRCON for Player ID `{player_id}`, double check the player ID and reattempt with `force` set to **True** if you're sure."
+            await ctx.respond(embed=embed)
             return
 
-        player_id_already_linked = False
         previous_linked_discord = None
         with enter_session() as session:
-            (
-                player_id_already_linked,
-                previous_linked_discord,
-            ) = link_primary_crcon_to_discord(
+            previous_linked_discord = link_primary_crcon_to_discord(
                 session=session, player_id=player_id, discord_name=discord_user.name
             )
 
-        if player_id_already_linked:
-            await ctx.respond(
-                f"Linked {discord_user} to {player_id=} (was previously linked to {previous_linked_discord})"
+        embed.title = "Link Primary CRCON Primary ID"
+        embed.add_field(name="Player ID", value=player_id)
+        embed.description = f"Linked {discord_user.mention}"
+        if previous_linked_discord:
+            prev_user = discord_name_as_user(
+                previous_linked_discord, members=ctx.guild.members
             )
-        else:
-            await ctx.respond(f"Linked {discord_user} to {player_id=}")
+            embed.add_field(name="Previous Linked Discord", value=prev_user.mention)
+
+        await ctx.respond(embed=embed)
 
     @discord.slash_command(description="")
     async def unlink_primary_crcon(
@@ -119,7 +119,13 @@ class Crcon(commands.Cog):
             )
 
         # TODO: include main/sponsored status
-        await ctx.respond(f"Unlinked {discord_user} from {deleted_player_id}")
+        embed = discord.Embed()
+        embed.description = f"Unlinked {discord_user.mention}"
+        embed.add_field(
+            name="Player ID",
+            value=deleted_player_id if deleted_player_id else str(None),
+        )
+        await ctx.respond(embed=embed)
 
     @discord.slash_command(description="")
     async def link_sponsored_crcon(
@@ -143,28 +149,30 @@ class Crcon(commands.Cog):
             await ctx.respond(f"Unexpected error occurred: {e}")
             crcon_record = None
 
-        logger.debug(f"link_sponsored_crcon {crcon_record=}")
+        # logger.debug(f"link_sponsored_crcon {crcon_record=}")
 
+        embed = discord.Embed()
+        embed.title = "Link Sponsored CRCON Player ID"
         if not crcon_record and not force:
-            await ctx.respond(
-                f"No player found in CRCON for player_id=`{player_id}`, double check the player ID and reattempt with `force` set to True if you're sure."
-            )
+            embed.description = f"No player found in CRCON for Player ID `{player_id}`, double check the player ID and reattempt with `force` set to **True** if you're sure."
+            await ctx.respond(embed=embed)
             return
 
         with enter_session() as session:
-            (
-                player_id_already_linked,
-                previous_linked_discord,
-            ) = link_sponsored_crcon_to_discord(
+            previous_linked_discord = link_sponsored_crcon_to_discord(
                 session=session, discord_name=discord_user.name, player_id=player_id
             )
 
-        if player_id_already_linked:
-            await ctx.respond(
-                f"Linked {player_id} to {discord_user} (was previously linked to {previous_linked_discord})"
+        embed.add_field(name="Player ID", value=f"Linked to {discord_user.mention}")
+        embed.add_field(name="Player ID", value=player_id)
+        embed.description = f"Linked {discord_user.mention}"
+        if previous_linked_discord:
+            prev_user = discord_name_as_user(
+                previous_linked_discord, members=ctx.guild.members
             )
-        else:
-            await ctx.respond(f"Linked {player_id} to {discord_user}")
+            embed.add_field(name="Previous Linked Discord", value=prev_user.mention)
+
+        await ctx.respond(embed=embed)
 
     @discord.slash_command(
         description="Set the primary CRCON accounts VIP expiration based on their Patreon status"
