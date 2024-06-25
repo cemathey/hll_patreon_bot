@@ -49,7 +49,7 @@ class DiscordPlayers(Base):
 
     discord_id: Mapped[int] = mapped_column(ForeignKey("discord.id"), primary_key=True)
     player_id: Mapped[int] = mapped_column(ForeignKey("player.id"), primary_key=True)
-    main: Mapped[bool] = mapped_column(nullable=True)
+    main: Mapped[bool] = mapped_column(nullable=False, default=False, primary_key=True)
     discord: Mapped["Discord"] = relationship(back_populates="players")
     player: Mapped["Player"] = relationship(back_populates="discords")
 
