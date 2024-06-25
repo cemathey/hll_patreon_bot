@@ -108,7 +108,7 @@ class SteamInfoType(TypedDict):
 
 class PlayerVIPType(TypedDict):
     server_number: int
-    expiration: datetime
+    expiration: str
     vip_name: str
 
 
