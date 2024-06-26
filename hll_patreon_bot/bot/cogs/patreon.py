@@ -67,8 +67,6 @@ def create_pledge_history_embed(
             inline=True,
         )
         embed.add_field(name="Status", value=str(p["status"]), inline=True)
-        # embed.add_field(name="\u200B", value="\u200B")  # newline
-        embed.add_field(name="\u200b", value="\u200b", inline=False)
 
     embed.timestamp = datetime.now(tz=timezone.utc)
 
