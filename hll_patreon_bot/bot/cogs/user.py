@@ -113,7 +113,7 @@ class User(commands.Cog):
                 session=sess, discord_user_name=discord_user.name
             )
             if discord_record:
-                player_names = await fetch_players(
+                player_crcon_records = await fetch_players(
                     client=self.client,
                     player_ids=[p.player.player_id for p in discord_record.players],
                 )
@@ -125,7 +125,7 @@ class User(commands.Cog):
                     ),
                     discord_name=discord_record.discord_name,
                     players=discord_record.players,
-                    player_profiles=player_names,
+                    player_profiles=player_crcon_records,
                     guild_members=ctx.guild.members if ctx.guild else [],
                     own_status=False,
                 )
@@ -133,7 +133,7 @@ class User(commands.Cog):
                     create_crcon_player_embed(
                         player=player, server_details=await self.server_details
                     )
-                    for player in player_names.values()
+                    for player in player_crcon_records.values()
                 ]
 
                 if player_embeds:
@@ -147,27 +147,44 @@ class User(commands.Cog):
 
     @discord.slash_command(description="")
     async def my_status(self, ctx: ApplicationContext):
+        await ctx.defer()
+
         discord_user = ctx.interaction.user
         with enter_session() as sess:
-            res = get_set_discord_record(
+            discord_record = get_set_discord_record(
                 session=sess, discord_user_name=discord_user.name
             )
 
             # TODO: sort players, format better for main/sponsored
-            if res:
-                player_names = await fetch_players(
+            if discord_record:
+                player_crcon_records = await fetch_players(
                     client=self.client,
-                    player_ids=[p.player.player_id for p in res.players],
+                    player_ids=[p.player.player_id for p in discord_record.players],
                 )
                 embed = create_status_embed(
-                    patreon_id=res.patreon.patreon_id if res.patreon else None,
-                    discord_name=res.discord_name,
-                    players=res.players,
-                    player_profiles=player_names,
+                    patreon_id=(
+                        discord_record.patreon.patreon_id
+                        if discord_record.patreon
+                        else None
+                    ),
+                    discord_name=discord_record.discord_name,
+                    players=discord_record.players,
+                    player_profiles=player_crcon_records,
                     guild_members=ctx.guild.members if ctx.guild else [],
                     own_status=True,
                 )
-                await ctx.respond(embed=embed)
+                player_embeds = [
+                    create_crcon_player_embed(
+                        player=player, server_details=await self.server_details
+                    )
+                    for player in player_crcon_records.values()
+                ]
+                if player_embeds:
+                    embeds = [embed, *player_embeds]
+                else:
+                    embeds = [embed]
+
+                await ctx.respond(embeds=embeds)
             else:
                 await ctx.send(f"No player record found, please open a ticket")
 

@@ -79,6 +79,7 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
     last_charge_status: str | None = data["data"]["attributes"]["last_charge_status"]
     next_charge_date: str | None = data["data"]["attributes"].get("next_charge_date")
     patron_status: str = data["data"]["attributes"]["patron_status"]
+    pledge_ids: set[str] = set()
 
     discord_user_id: int | None = None
     thumb_url: str | None = None
@@ -95,13 +96,20 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
                 )
                 thumb_url = obj["attributes"].get("thumb_url")
             elif obj["type"] == "pledge-event":
+                pledge_event = parse_pledge(data=obj)
+                pledge_history.append(pledge_event)
                 if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
-                    logger.info(f"{obj}")
-                pledge_history.append(parse_pledge(obj["attributes"]))
+                    logger.info(f"pledge-event={obj}")
 
-    except KeyError:
+    except KeyError as e:
+        logger.exception(e)
         # The user might not have a social connection dict for Discord
         discord_user_id = None
+
+    for obj in data["data"]["relationships"].get("pledge_history", {}).get("data"):
+        if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
+            logger.info(f"obj={obj}")
+        pledge_ids.add(obj["id"])
 
     note: str = data["data"]["attributes"]["note"]
 
@@ -125,6 +133,7 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
         "discord_user_id": int(discord_user_id) if discord_user_id else None,
         "note": note,
         "thumb_url": thumb_url,
+        "pledge_ids": pledge_ids,
         "pledge_history": pledge_history,
     }
 
@@ -194,6 +203,9 @@ def parse_campaign_members(data: dict[str, Any]) -> dict[str, PatreonMember]:
     # by user ID
     user_lookup: dict[str, PatreonUserAttributes] = {}
 
+    # TODO: Fix pledge IDs!
+    pledge_ids: set[str] = set()
+
     for obj in data["data"]:
         member = _parse_campaign_member(data=obj)
         raw_members[member["user_id"]] = member
@@ -218,7 +230,7 @@ def parse_campaign_members(data: dict[str, Any]) -> dict[str, PatreonMember]:
     for member in raw_members.values():
         if member["id"] == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
             for p_id in member["pledge_ids"]:
-                logger.info(f"{pledge_history_lookup[p_id]}")
+                logger.info(f"{pledge_history_lookup[p_id]=}")
         pledge_history = sorted(
             [
                 pledge_history_lookup[p_id]
@@ -242,6 +254,8 @@ def parse_campaign_members(data: dict[str, Any]) -> dict[str, PatreonMember]:
             "note": member["note"],
             "discord_user_id": user_lookup[member["user_id"]]["discord_user_id"],
             "thumb_url": user_lookup[member["user_id"]]["thumb_url"],
+            # TODO: Fix pledge IDs!
+            "pledge_ids": pledge_ids,
             "pledge_history": pledge_history,
         }
         member_lookup[member["id"]] = typed_member

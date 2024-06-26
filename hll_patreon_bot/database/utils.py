@@ -91,7 +91,6 @@ def get_primary_crcon_record(session: Session, discord_user_name: str) -> Player
 
 
 def link_patreon_to_discord(session: Session, patreon_id: str, discord_name: str):
-    patreon_id_already_linked = False
     previous_linked_discord: str | None = None
 
     discord_record = get_set_discord_record(
@@ -108,36 +107,26 @@ def link_patreon_to_discord(session: Session, patreon_id: str, discord_name: str
         patreon_record.discord = discord_record
         logger.warning(f"{patreon_record} linked to {discord_record}")
     elif patreon_record and patreon_record.discord:
-        patreon_id_already_linked = True
         previous_linked_discord = patreon_record.discord.discord_name
         patreon_record.discord = discord_record
         logger.warning(
             f"{discord_record!r} previously linked to {patreon_record.discord.discord_name} now linked to {discord_record.discord_name}"
         )
 
-    return patreon_id_already_linked, previous_linked_discord
+    return previous_linked_discord
 
 
-def unlink_patreon_from_discord(
-    session: Session, patreon_id: str, discord_name: str
-) -> str | None:
+def unlink_patreon_from_discord(session: Session, discord_name: str) -> str | None:
     discord_record = get_set_discord_record(
         session=session, discord_user_name=discord_name
     )
 
     if discord_record.patreon is None:
         logger.warning(
-            f"Tried to unlink {patreon_id} from {discord_record} but it was not already linked"
+            f"Tried to unlink from {discord_record} but it was not already linked"
         )
         return None
-    if discord_record.patreon.patreon_id == patreon_id:
-        logger.warning(f"Unlinked {discord_record.patreon} from {discord_record}")
-        session.delete(discord_record.patreon)
-    else:
-        logger.warning(
-            f"Tried to unlink {patreon_id} from {discord_record} but it is linked to {discord_record.patreon}"
-        )
-
+    session.delete(discord_record.patreon)
     return discord_record.patreon.patreon_id
 
 

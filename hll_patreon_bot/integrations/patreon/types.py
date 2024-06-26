@@ -63,6 +63,7 @@ class PatreonMember(TypedDict):
     discord_user_id: int | None
     note: str
     thumb_url: str | None  # user
+    pledge_ids: set[str]
     pledge_history: list[PledgeHistory]
 
 

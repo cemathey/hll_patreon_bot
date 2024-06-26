@@ -1,8 +1,5 @@
-import json
 import locale
-import operator
 from datetime import datetime, timezone
-from pprint import pprint
 
 import discord
 import httpx
@@ -11,7 +8,7 @@ from discord.commands import ApplicationContext
 from discord.ext import commands
 from loguru import logger
 
-from hll_patreon_bot.bot.utils import one_or_none
+from hll_patreon_bot.bot.utils import discord_name_as_user, one_or_none
 from hll_patreon_bot.database.models import enter_session
 from hll_patreon_bot.database.utils import (
     get_set_discord_record,
@@ -81,16 +78,15 @@ def create_pledge_history_embed(
 def create_patreon_embed(
     member: PatreonMember,
     discord_user: discord.User | None = None,
-    # user: patreon_api_types.User | None = None,
-    # tiers: dict[str, patreon_api_types.Tier] | None = None,
-    # pledge_histories: dict[str, patreon_api_types.PledgeEvent] | None = None,
 ) -> discord.Embed:
     embed = discord.Embed()
 
-    embed.add_field(
-        name="Discord",
-        value=f"{discord_user.mention}" if discord_user else "",
-    )
+    if discord_user:
+        embed.add_field(
+            name="Discord",
+            value=f"{discord_user.mention}",
+        )
+
     embed.add_field(name="Patreon ID", value=member["id"], inline=False)
     embed.add_field(name="Email", value=member["email"])
     embed.add_field(name="Name", value=member["name"] if member["name"] else "")
@@ -135,17 +131,6 @@ def create_patreon_embed(
         ),
     )
 
-    # TODO: add this again
-    # for tier in member.currently_entitled_tiers:
-    #     t = tiers.get(tier, None) if tiers else None
-    #     # print(f"{t=} {tier=}")
-    #     embed.add_field(
-    #         name="Tier: ", value=t.title if t and t.title else "", inline=False
-    #     )
-    #     # embed.add_field(
-    #     #     name="Tier: ", value=t.description if t and t.description else ""
-    #     # )
-
     embed.add_field(
         name="Patreon Notes", value=member["note"] if member["note"] else ""
     )
@@ -155,21 +140,9 @@ def create_patreon_embed(
 
     embed.timestamp = datetime.now(tz=timezone.utc)
 
+    # TODO: Include payment history
+
     return embed
-
-
-# def format_patreon_member_display(member: patreon_api_types.Member):
-#     # TODO hammertyme this and use embeds/md for better formatting
-#     return f"""
-# Patreon ID: `{member.id}`
-# email: `{member.email}`
-# Name: `{member.full_name}`
-# Patron Status: `{member.patron_status.value if member.patron_status else None}`
-# Last Charge Status: `{member.last_charge_status.value if member.last_charge_status else None}`
-# Last Charge (or attempted charge) Date: `{member.last_charge_date}`
-# Next Charge Date: `{member.next_charge_date}`
-# Patreon Notes: `{member.note}`
-# """
 
 
 class Patreon(commands.Cog):
@@ -179,6 +152,7 @@ class Patreon(commands.Cog):
         super().__init__()
         self.bot = bot
 
+    # TODO: Figure out how to cache these results
     # @cachedmethod(operator.attrgetter("cache"))
     async def fetch_members(self):
         async with httpx.AsyncClient() as client:
@@ -197,7 +171,9 @@ class Patreon(commands.Cog):
             )
 
             if discord_record.patreon is None:
-                await ctx.respond(f"No Patreon account found for {discord_user}")
+                await ctx.respond(
+                    f"No Patreon account found for {discord_user.mention}"
+                )
             else:
                 async with httpx.AsyncClient() as client:
                     patreon_member = await get_member(
@@ -205,11 +181,15 @@ class Patreon(commands.Cog):
                     )
 
                 if patreon_member:
-                    await ctx.respond(embed=create_patreon_embed(patreon_member))
+                    patreon_embed = create_patreon_embed(
+                        member=patreon_member, discord_user=discord_user
+                    )
+                    pledge_embed = create_pledge_history_embed(
+                        pledge_histories=patreon_member["pledge_history"]
+                    )
+                    await ctx.respond(embeds=[patreon_embed, pledge_embed])
 
-    @discord.slash_command(
-        description="Link (connect) a Discord account to a Patreon account"
-    )
+    @discord.slash_command(description="Link a Discord account to a Patreon account")
     async def link_patreon(
         self, ctx: ApplicationContext, discord_user: discord.User, patreon_id: str
     ):
@@ -217,60 +197,50 @@ class Patreon(commands.Cog):
             patreon_member = await get_member(client=client, member_id=patreon_id)
 
         if patreon_member is None:
-            await ctx.respond(f"No Patreon account found for patreon_id `{patreon_id}`")
+            await ctx.respond(f"No Patreon account found for Patreon ID `{patreon_id}`")
             return
 
-        patreon_id_already_linked = False
         previous_linked_discord = None
         with enter_session() as session:
-            (
-                patreon_id_already_linked,
-                previous_linked_discord,
-            ) = link_patreon_to_discord(
+            previous_linked_discord = link_patreon_to_discord(
                 session=session,
                 patreon_id=patreon_id,
                 discord_name=discord_user.name,
             )
 
-        if patreon_id_already_linked and previous_linked_discord != discord_user.name:
-            previous_user = discord.utils.get(
-                ctx.guild.members, name=previous_linked_discord
+        if previous_linked_discord and previous_linked_discord != discord_user.name:
+            previous_user = discord_name_as_user(
+                discord_name=previous_linked_discord, members=ctx.guild.members
             )
             await ctx.respond(
-                f"Linked {discord_user.mention} to patreon_id `{patreon_id}` (was previously linked to {previous_user.mention if previous_user else previous_linked_discord})"
+                f"Linked {discord_user.mention} to Patreon ID `{patreon_id}` (was previously linked to {previous_user.mention if previous_user else previous_linked_discord})"
             )
-        elif patreon_id_already_linked and previous_linked_discord == discord_user.name:
+        elif previous_linked_discord == discord_user.name:
             await ctx.respond(
                 f"{discord_user.mention} was already linked to `{patreon_id}`"
             )
         else:
             await ctx.respond(
-                f"Linked {discord_user.mention} to patreon_id `{patreon_id}`"
+                f"Linked {discord_user.mention} to Patreon ID `{patreon_id}`"
             )
 
     @discord.slash_command(
-        description="Unlink (disconnect) a Discord account from their Patreon account"
+        description="Unlink a Discord account from their Patreon account"
     )
-    async def unlink_patreon(
-        self, ctx: ApplicationContext, discord_user: discord.User, patreon_id: str
-    ):
+    async def unlink_patreon(self, ctx: ApplicationContext, discord_user: discord.User):
         with enter_session() as session:
             linked_patreon_id = unlink_patreon_from_discord(
-                session=session, patreon_id=patreon_id, discord_name=discord_user.name
+                session=session, discord_name=discord_user.name
             )
 
             if linked_patreon_id is None:
                 await ctx.respond(
-                    f"{discord_user} does not have a Patreon record in the database"
+                    f"{discord_user.mention} does not have a Patreon record in the database"
                 )
                 return
-            elif linked_patreon_id == patreon_id:
-                await ctx.respond(
-                    f"Unlinked {discord_user.mention} from patreon_id `{patreon_id}`"
-                )
             else:
                 await ctx.respond(
-                    f"{discord_user.mention} has patreon_id=`{linked_patreon_id}` linked not `{patreon_id}`, account **not unlinked**"
+                    f"{discord_user.mention} unlinked from `{linked_patreon_id}`"
                 )
 
     @discord.slash_command(description="Search Patreon for a specific identifier")
