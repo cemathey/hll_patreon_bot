@@ -183,7 +183,7 @@ async def fetch_primary_server_details(
 async def fetch_secondary_server_details(
     client: httpx.AsyncClient,
     rcon_url: str = CRCON_URL,
-    endpoint: str = "api/server_list",
+    endpoint: str = "api/get_server_list",
 ) -> dict[str, ServerDetails]:
     url = urljoin(rcon_url, endpoint)
     res = await client.get(url=url)
