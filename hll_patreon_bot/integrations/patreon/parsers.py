@@ -36,7 +36,8 @@ def parse_pledge(data: dict[str, Any]) -> PledgeHistory:
         "subscription:881317045",
         "pledge_start:92396917",
     ):
-        logger.error(f"parse_pledge data={json.dumps(data)}")
+        # logger.error(f"parse_pledge data={json.dumps(data)}")
+        pass
 
     type_: PledgeEventType = PledgeEventType(attributes["type"])
     amount_cents: int = int(attributes.get("amount_cents", 0))
@@ -67,8 +68,8 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
     in case we need to handle any special cases
     """
     id_: str = data["data"]["id"]
-    if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
-        logger.info(f"data={data}")
+    # if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
+    #     logger.info(f"data={data}")
 
     currently_entitled_amount_cents: int = data["data"]["attributes"].get(
         "currently_entitled_amount_cents", 0
@@ -98,8 +99,8 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
             elif obj["type"] == "pledge-event":
                 pledge_event = parse_pledge(data=obj)
                 pledge_history.append(pledge_event)
-                if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
-                    logger.info(f"pledge-event={obj}")
+                # if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
+                #     logger.info(f"pledge-event={obj}")
 
     except KeyError as e:
         logger.exception(e)
@@ -107,8 +108,8 @@ def parse_member(data: dict[str, Any]) -> PatreonMember:
         discord_user_id = None
 
     for obj in data["data"]["relationships"].get("pledge_history", {}).get("data"):
-        if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
-            logger.info(f"obj={obj}")
+        # if id_ == "52c7b310-8d73-4ce8-bfba-ef1caa58eb4e":
+        #     logger.info(f"obj={obj}")
         pledge_ids.add(obj["id"])
 
     note: str = data["data"]["attributes"]["note"]

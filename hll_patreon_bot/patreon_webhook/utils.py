@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any, TypedDict
 
-from patreon_webhook.types import (
+from hll_patreon_bot.patreon_webhook.types import (
     ChargeStatus,
     PatreonMemberWH,
     PatreonPledgeWH,

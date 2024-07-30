@@ -214,12 +214,15 @@ def link_sponsored_crcon_to_discord(
 
     stmt = (
         select(DiscordPlayers)
-        .where(DiscordPlayers.discord == discord_record)
-        .where(DiscordPlayers.player == player_record)
-        .where(DiscordPlayers.main == False)
+        # Don't allow players to be sponsored by more than 1 account
+        # .where(DiscordPlayers.discord == discord_record)
+        .where(DiscordPlayers.player == player_record).where(
+            DiscordPlayers.main == False
+        )
     )
 
     discord_player = session.scalars(stmt).one_or_none()
+    logger.warning(f"{discord_player=}")
     if discord_player:
         previous_linked_discord = discord_player.discord.discord_name
         logger.warning(
@@ -227,10 +230,10 @@ def link_sponsored_crcon_to_discord(
         )
     else:
         discord_player = DiscordPlayers()
-        discord_player.discord = discord_record
-        discord_player.player = player_record
-        session.add(discord_player)
 
+    discord_player.discord = discord_record
+    discord_player.player = player_record
+    session.add(discord_player)
     return previous_linked_discord
 
 

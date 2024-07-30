@@ -141,7 +141,7 @@ class RconAPIResponse(TypedDict):
 
 class VipPlayer(pydantic.BaseModel):
     name: str
-    steam_id_64: str
+    player_id: str
     expiration_date: datetime | None
 
 

@@ -2,18 +2,6 @@ from datetime import datetime, timedelta, timezone
 
 import httpx
 from loguru import logger
-from patreon_webhook.types import (
-    PatreonMemberWH,
-    PatreonPledgeWH,
-    PatreonTriggerAction,
-    PatreonTriggerResource,
-    PatreonWebhook,
-)
-from patreon_webhook.utils import (
-    calc_vip_expiration_timestamp,
-    parse_patreon_member_webhook,
-    parse_patreon_pledge_webhook,
-)
 
 from hll_patreon_bot.bot.constants import MISSING_PLAYER_NAME
 from hll_patreon_bot.database.models import enter_session
@@ -22,6 +10,18 @@ from hll_patreon_bot.integrations.crcon.crcon import (
     add_vip,
     fetch_current_expiration,
     fetch_current_vips,
+)
+from hll_patreon_bot.patreon_webhook.types import (
+    PatreonMemberWH,
+    PatreonPledgeWH,
+    PatreonTriggerAction,
+    PatreonTriggerResource,
+    PatreonWebhook,
+)
+from hll_patreon_bot.patreon_webhook.utils import (
+    calc_vip_expiration_timestamp,
+    parse_patreon_member_webhook,
+    parse_patreon_pledge_webhook,
 )
 
 
@@ -139,7 +139,7 @@ async def handle_pledge_update(client: httpx.AsyncClient, data: PatreonPledgeWH)
                     await add_vip(
                         client=client,
                         player_id=player_id,
-                        name=vip_name,
+                        description=vip_name,
                         expiration_timestamp=new_expiration,
                     )
 

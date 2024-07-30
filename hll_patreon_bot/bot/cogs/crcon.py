@@ -106,7 +106,7 @@ class Crcon(commands.Cog):
                 crcon_record, server_details=await self.server_details
             )
 
-        logger.debug(f"link_primary_crcon {crcon_record=}")
+        # logger.debug(f"link_primary_crcon {crcon_record=}")
         embed = discord.Embed()
         if not crcon_record and not force:
             embed.description = f"No player found in CRCON for Player ID `{player_id}`, double check the player ID and reattempt with `force` set to **True** if you're sure."
@@ -149,7 +149,9 @@ class Crcon(commands.Cog):
 
         if not deleted_player_id:
             # TODO: error message
-            await ctx.respond(f"")
+            await ctx.respond(
+                f"{discord_user.mention} was not linked to a CRCON account"
+            )
             return
 
         player_embed: discord.Embed | None = None
@@ -162,19 +164,10 @@ class Crcon(commands.Cog):
             )
 
         # TODO: include main/sponsored status
-        embed = discord.Embed()
-        embed.description = f"Unlinked {discord_user.mention}"
-        embed.add_field(
-            name="Player ID",
-            value=deleted_player_id if deleted_player_id else str(None),
+        await ctx.respond(
+            f"Unlinked {discord_user.mention} from `{deleted_player_id}",
+            embed=player_embed,
         )
-
-        if player_embed:
-            embeds = [embed, player_embed]
-        else:
-            embeds = [embed]
-
-        await ctx.respond(embeds=embeds)
 
     @discord.slash_command(description="")
     async def link_sponsored_crcon(
@@ -188,6 +181,8 @@ class Crcon(commands.Cog):
     ):
         if not with_permission(ctx):
             return
+
+        await ctx.defer()
 
         player_embed: discord.Embed | None = None
         crcon_record = await _fetch_crcon_player_record(
@@ -252,8 +247,11 @@ class Crcon(commands.Cog):
         self,
         ctx: ApplicationContext,
         discord_user: discord.User,
+        description: str,
         expiration: str | None,
     ):
+        # TODO finish this
+
         # Look up the CRCON player ID or fail
         # Look up the discord ID
         # Get the name automatically
@@ -278,7 +276,7 @@ class Crcon(commands.Cog):
         if player:
             await ctx.respond(
                 embed=create_crcon_player_embed(
-                    crcon_record, server_details=await self.server_details
+                    player, server_details=await self.server_details
                 )
             )
         else:

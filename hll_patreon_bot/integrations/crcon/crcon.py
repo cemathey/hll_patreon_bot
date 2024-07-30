@@ -27,21 +27,21 @@ from hll_patreon_bot.integrations.crcon.types import (
 async def add_vip(
     client: httpx.AsyncClient,
     player_id: str,
-    name: str,
+    description: str,
     expiration_timestamp: datetime,
     server_url: str = CRCON_URL,
-    endpoint: str = "do_add_vip",
+    endpoint: str = "add_vip",
 ) -> RconAPIResponse:
     url = urljoin(server_url, endpoint)
 
     payload = {
-        "steam_id_64": player_id,
-        "name": name,
+        "player_id": player_id,
+        "description": description,
         "expiration": expiration_timestamp,
     }
 
     logger.info(
-        f"Adding/updating VIP expiration for {player_id=} {name=} {expiration_timestamp=}"
+        f"Adding/updating VIP expiration for {player_id=} {description=} {expiration_timestamp=}"
     )
     res = await client.post(url=url, data=payload)
     res_body: RconAPIResponse = res.json()
@@ -52,11 +52,11 @@ async def remove_vip(
     client: httpx.AsyncClient,
     player_id: str,
     server_url: str = CRCON_URL,
-    endpoint: str = "do_remove_vip",
+    endpoint: str = "remove_vip",
 ):
     url = urljoin(server_url, endpoint)
     payload = {
-        "steam_id_64": player_id,
+        "player_id": player_id,
     }
 
     res = await client.post(url=url, data=payload)
@@ -73,7 +73,7 @@ async def add_flag(
     endpoint: str = "flag_player",
 ):
     url = urljoin(server_url, endpoint)
-    payload = {"steam_id_64": player_id, "flag": flag, "comment": comment}
+    payload = {"player_id": player_id, "flag": flag, "comment": comment}
 
     res = await client.post(url=url, data=payload)
     # res.raise_for_status()
@@ -109,8 +109,8 @@ async def fetch_current_vips(
 
     raw_vips = response.json()["result"]
     return {
-        vip["steam_id_64"]: VipPlayer(
-            steam_id_64=vip["steam_id_64"],
+        vip["player_id"]: VipPlayer(
+            player_id=vip["player_id"],
             name=vip["name"],
             expiration_date=vip["vip_expiration"],
         )
@@ -122,9 +122,9 @@ async def fetch_player(
     client: httpx.AsyncClient,
     player_id: str,
     rcon_url: str = CRCON_URL,
-    endpoint: str = "api/player",
+    endpoint: str = "api/get_player_profile",
 ) -> PlayerProfileType | None:
-    params = {"steam_id_64": player_id}
+    params = {"player_id": player_id}
     url = urljoin(rcon_url, endpoint)
     res = await client.get(url=url, params=params)
 

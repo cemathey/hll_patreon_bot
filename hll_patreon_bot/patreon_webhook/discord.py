@@ -2,8 +2,9 @@ from datetime import datetime, timezone
 from typing import Callable, Type
 
 import discord
-from bot.utils import cents_as_currency
-from patreon_webhook.constants import (
+
+from hll_patreon_bot.bot.utils import cents_as_currency
+from hll_patreon_bot.patreon_webhook.constants import (
     ACTION_CREATE,
     ACTION_DELETE,
     ACTION_UPDATE,
@@ -12,7 +13,7 @@ from patreon_webhook.constants import (
     RESOURCE_MEMBER,
     RESOURCE_PLEDGE,
 )
-from patreon_webhook.types import (
+from hll_patreon_bot.patreon_webhook.types import (
     PatreonMemberWH,
     PatreonPledgeWH,
     PatreonTriggerAction,
