@@ -226,6 +226,9 @@ class Crcon(commands.Cog):
     async def sync_vip_status(
         self, ctx: ApplicationContext, discord_user: discord.User
     ):
+        if not with_permission(ctx):
+            return
+
         with enter_session() as session:
             discord_record = get_set_discord_record(
                 session=session, discord_user_name=discord_user.name

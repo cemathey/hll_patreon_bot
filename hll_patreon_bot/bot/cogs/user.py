@@ -16,6 +16,7 @@ from hll_patreon_bot.bot.utils import (
     add_blank_embed_field,
     discord_name_as_user,
     raise_on_4xx_5xx,
+    with_permission,
 )
 from hll_patreon_bot.database.models import DiscordPlayers, enter_session
 from hll_patreon_bot.database.utils import get_set_discord_record
@@ -105,6 +106,9 @@ class User(commands.Cog):
 
     @discord.slash_command(description="")
     async def status(self, ctx: ApplicationContext, discord_user: discord.User):
+        if not with_permission(ctx):
+            return
+
         await ctx.defer()
 
         player_embeds = []

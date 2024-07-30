@@ -8,7 +8,7 @@ from discord.commands import ApplicationContext
 from discord.ext import commands
 from loguru import logger
 
-from hll_patreon_bot.bot.utils import discord_name_as_user, one_or_none
+from hll_patreon_bot.bot.utils import discord_name_as_user, one_or_none, with_permission
 from hll_patreon_bot.database.models import enter_session
 from hll_patreon_bot.database.utils import (
     get_set_discord_record,
@@ -163,6 +163,9 @@ class Patreon(commands.Cog):
 
     @discord.slash_command(description="Show the user's status on Patreon")
     async def show_patreon(self, ctx: ApplicationContext, discord_user: discord.User):
+        if not with_permission(ctx):
+            return
+
         with enter_session() as session:
             discord_record = get_set_discord_record(
                 session=session, discord_user_name=discord_user.name
@@ -191,6 +194,9 @@ class Patreon(commands.Cog):
     async def link_patreon(
         self, ctx: ApplicationContext, discord_user: discord.User, patreon_id: str
     ):
+        if not with_permission(ctx):
+            return
+
         async with httpx.AsyncClient() as client:
             patreon_member = await get_member(client=client, member_id=patreon_id)
 
@@ -226,6 +232,9 @@ class Patreon(commands.Cog):
         description="Unlink a Discord account from their Patreon account"
     )
     async def unlink_patreon(self, ctx: ApplicationContext, discord_user: discord.User):
+        if not with_permission(ctx):
+            return
+
         with enter_session() as session:
             linked_patreon_id = unlink_patreon_from_discord(
                 session=session, discord_name=discord_user.name
@@ -252,6 +261,9 @@ class Patreon(commands.Cog):
         name: str | None,
         notes: str | None,
     ):
+        if not with_permission(ctx):
+            return
+
         await ctx.respond(
             embed=create_patreon_search_embed(
                 email=email,
