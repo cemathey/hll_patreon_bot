@@ -31,7 +31,7 @@ def create_crcon_player_embed(
 ) -> discord.Embed:
     embed = discord.Embed()
     embed.title = "CRCON Player Record"
-    embed.add_field(name="Player ID", value=player["steam_id_64"])
+    embed.add_field(name="Player ID", value=player["player_id"])
     embed.add_field(
         name="Name:", value=player["names"][0]["name"] if player["names"] else ""
     )

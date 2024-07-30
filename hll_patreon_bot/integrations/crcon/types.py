@@ -7,14 +7,14 @@ import pydantic
 class PlayerNameType(TypedDict):
     id: int
     name: str
-    steam_id_64: str
+    player_id: str
     created: datetime
     last_seen: datetime
 
 
 class PlayerSessionType(TypedDict):
     id: int
-    steam_id_64: str
+    player_id: str
     start: Optional[datetime]
     end: Optional[datetime]
     created: datetime
@@ -35,7 +35,7 @@ class PenaltyCountType(TypedDict):
 
 
 class BlackListType(TypedDict):
-    steam_id_64: str
+    player_id: str
     is_blacklisted: bool
     reason: Optional[str]
     by: Optional[str]
@@ -51,7 +51,7 @@ class PlayerFlagType(TypedDict):
 class WatchListType(TypedDict):
     id: int
     modified: datetime
-    steam_id_64: str
+    player_id: str
     is_watched: bool
     reason: str
     by: str
@@ -114,7 +114,7 @@ class PlayerVIPType(TypedDict):
 
 class PlayerProfileType(TypedDict):
     id: int
-    steam_id_64: str
+    player_id: str
     created: datetime
     names: list[PlayerNameType]
     sessions: list[PlayerSessionType]
